@@ -5,6 +5,7 @@ public class main {
 			GameWindow w= new GameWindow();
 			w.setTitle("Xadrez");
 			w.setVisible(true);
+			w.setLayout(null);
 			
 		}
 	

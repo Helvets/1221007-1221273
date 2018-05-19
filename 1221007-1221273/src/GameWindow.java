@@ -1,18 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
 public class GameWindow extends JFrame{
 	public final int LARG_PADRAO = 400*3;
 	public final int ALT_PADRAO = 300*3;
+	
+//	public static final int size = 50;
+////	public static final int BOARD_MARGIN = 20;
 	Board game_board = new Board();
-	
-	
 	public GameWindow () {
-		//super(s); //pra que serve?
-		
+		game_board.setLayout(null);
 		game_board.setBackground(Color.GREEN);
-		getContentPane().add(game_board);
+		game_board.iniChessBoard();
+		add(game_board);
+
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
@@ -24,7 +28,9 @@ public class GameWindow extends JFrame{
 		
 		setBounds(x,y,LARG_PADRAO, ALT_PADRAO);
 		
+//		setSize(size*8+BOARD_MARGIN*2, size*8+BOARD_MARGIN*3);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
-	
+
+
 }
