@@ -39,35 +39,31 @@ public class GameWindow extends JFrame implements MouseListener{
 	
 	public void mouseClicked(MouseEvent e) {
 
-		selectedSquareX = (e.getX()-8)/size;
-		selectedSquareY = (e.getY()-30)/size;
-		System.out.printf("%d ",selectedSquareX);
-		System.out.printf("%d\n",selectedSquareY);
-		if(selectedSquareX >= 0 && selectedSquareY >= 0 &&
-				selectedSquareX < 8 && selectedSquareY < 8) {
-			if((xadrez.isBlackTurn && xadrez.pieces[selectedSquareX][selectedSquareY].isBlack)||
-					(!xadrez.isBlackTurn && !xadrez.pieces[selectedSquareX][selectedSquareY].isBlack)) {
-				if (!xadrez.selected.someoneIsSelected) {
-					xadrez.pieces[selectedSquareX][selectedSquareY].isSelected=true;
-					xadrez.moveList(selectedSquareX, selectedSquareY);
-					xadrez.selected.i=selectedSquareX;
-					xadrez.selected.j=selectedSquareY;
-					xadrez.selected.someoneIsSelected=true;
-				}else if (xadrez.pieces[selectedSquareX][selectedSquareY].isHighlighted) {
-						xadrez.move(selectedSquareX, selectedSquareY);
-						xadrez.ClearSelecction();
-						xadrez.selected.someoneIsSelected=false;	
-					}else {
-						xadrez.ClearSelecction();
-						xadrez.pieces[selectedSquareX][selectedSquareY].isSelected=true;
-						xadrez.moveList(selectedSquareX, selectedSquareY);
-						xadrez.selected.i=selectedSquareX;
-						xadrez.selected.j=selectedSquareY;
-						xadrez.selected.someoneIsSelected=true;	
-					}
-				xadrez.repaint();
+		selectedSquareX = (e.getX() - 8) / size;
+		selectedSquareY = (e.getY() - 30) / size;
+		System.out.printf("%d ", selectedSquareX);
+		System.out.printf("%d\n", selectedSquareY);
+		if (selectedSquareX >= 0 && selectedSquareY >= 0 && selectedSquareX < 8 && selectedSquareY < 8) {
+			if (!xadrez.selected.someoneIsSelected) {
+				xadrez.pieces[selectedSquareX][selectedSquareY].isSelected = true;
+				xadrez.moveList(selectedSquareX, selectedSquareY);
+				xadrez.selected.i = selectedSquareX;
+				xadrez.selected.j = selectedSquareY;
+				xadrez.selected.someoneIsSelected = true;
+			} else if (xadrez.pieces[selectedSquareX][selectedSquareY].isHighlighted) {
+				xadrez.move(selectedSquareX, selectedSquareY);
+				xadrez.ClearSelecction();
+				xadrez.selected.someoneIsSelected = false;
+			} else if ((xadrez.isBlackTurn && xadrez.pieces[selectedSquareX][selectedSquareY].cor == Color.black)
+					|| (!xadrez.isBlackTurn && xadrez.pieces[selectedSquareX][selectedSquareY].cor == Color.white)) {
+				xadrez.ClearSelecction();
+				xadrez.pieces[selectedSquareX][selectedSquareY].isSelected = true;
+				xadrez.moveList(selectedSquareX, selectedSquareY);
+				xadrez.selected.i = selectedSquareX;
+				xadrez.selected.j = selectedSquareY;
+				xadrez.selected.someoneIsSelected = true;
 			}
-
+			xadrez.repaint();
 		}
 
 	}

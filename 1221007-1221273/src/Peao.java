@@ -8,18 +8,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+
 public class Peao extends Piece{
 	public boolean isFirstTurn;
 	
-	public Peao(boolean isBlack)
-	{
-		this.isBlack = isBlack;
+	public Peao(Color cor) {
+		this.cor = cor;
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected= false;
 		this.isFirstTurn = true;
 		try {
-			if (!isBlack)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_peao.gif"));
+			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_peao.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_peao.gif"));
 
 		}catch(IOException e) {
@@ -30,7 +30,7 @@ public class Peao extends Piece{
 
 	public boolean canMove(int x, int y) {
 		if (isFirstTurn) {
-			if (!isBlack) {
+			if (this.cor == Color.white) {
 				if ((y == 1 && x == 0) || (y == 2 && x == 0)) {
 					return true;
 				}
@@ -42,7 +42,7 @@ public class Peao extends Piece{
 				}
 			}
 		} else {
-			if (!isBlack) {
+			if (this.cor == Color.black) {
 				return y == 1 && x == 0;
 			} else {
 				return y == -1 && x == 0;
@@ -53,7 +53,7 @@ public class Peao extends Piece{
 	}
 	
 	public boolean canCapture(int x, int y) {
-		if(!isBlack)
+		if(this.cor == Color.white)
 		{
 			if((x == -1 || x == 1) && y == 1)
 			{
@@ -77,7 +77,7 @@ public class Peao extends Piece{
 		}
 	}
 	public String toString() {
-		if(isBlack) {
+		if(this.cor == Color.black) {
 			return "peao-preto";
 		} else {
 			return "peao-branco";

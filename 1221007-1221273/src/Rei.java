@@ -8,14 +8,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+
 public class Rei extends Piece {
-	public Rei(boolean isBlack) {
-		this.isBlack = isBlack;
+	public Rei(Color cor) {
+		this.cor = cor;
 		this.canJump = true;
 		this.isHighlighted = false;
 		this.isSelected = false;
 		try {
-			if (!isBlack) img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_rei.gif"));
+			if (this.cor == Color.white) img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_rei.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_rei.gif"));
 
 			
@@ -35,7 +36,7 @@ public class Rei extends Piece {
 		return ((x>=-1 && x<=1 && y>=-1 && y<=1) && !(x == 0 && y == 0));
 	}
 	public String toString() {
-		if(isBlack) {
+		if(this.cor == Color.black) {
 			return "rei-preto";
 		} else {
 			return "rei-branco";

@@ -8,15 +8,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+
 public class Bispo extends Piece{
 	
-	public Bispo(boolean isBlack) {
-		this.isBlack = isBlack;
+	public Bispo(Color cor) {
+		this.cor = cor;
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
 		try {
-			if (!isBlack)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_bispo.gif"));
+			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_bispo.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_bispo.gif"));
 
 		}catch(IOException e) {
@@ -33,7 +34,7 @@ public class Bispo extends Piece{
 		return (Math.abs(x) == Math.abs(y)) && !(x==0 && y ==0);
 	}
 	public String toString() {
-		if(isBlack) {
+		if(this.cor == Color.black) {
 			return "bispo-preto";
 		} else {
 			return "bispo-branco";

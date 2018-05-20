@@ -9,14 +9,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+
 public class Dama extends Piece{
-	public Dama(boolean isBlack) {
-		this.isBlack = isBlack;
+	public Dama(Color cor) {
+		this.cor = cor;
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
 		try {
-			if (!isBlack)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_dama.gif"));
+			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_dama.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_dama.gif"));
 
 		}catch(IOException e) {
@@ -34,7 +35,7 @@ public class Dama extends Piece{
 		return ((Math.abs(x)==Math.abs(y)) || x == 0 || y == 0) && !(x == 0 && y == 0);
 	}
 	public String toString() {
-		if(isBlack) {
+		if(this.cor == Color.black) {
 			return "dama-preta";
 		} else {
 			return "dama-branca";

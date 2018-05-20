@@ -15,55 +15,55 @@ public class Chess extends Board{
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (j == 1) {
-					pieces[i][j] = new Peao(true);
+					pieces[i][j] = new Peao(Color.black);
 				} else if (j == 6) {
-					pieces[i][j] = new Peao(false);
+					pieces[i][j] = new Peao(Color.white);
 				} else {
 					pieces[i][j] = new Vago();
 				}
 			}
 		}
-		pieces[4][0] = new Rei(true);
-		pieces[4][7] = new Rei(false);
-		pieces[0][0] = new Torre(true);
-		pieces[7][0] = new Torre(true);
-		pieces[0][7] = new Torre(false);
-		pieces[7][7] = new Torre(false);
-		pieces[3][0] = new Dama(true);
-		pieces[3][7] = new Dama(false);
-		pieces[2][0] = new Bispo(true);
-		pieces[5][0] = new Bispo(true);
-		pieces[2][7] = new Bispo(false);
-		pieces[5][7] = new Bispo(false);
-		pieces[1][0] = new Cavalo(true);
-		pieces[6][0] = new Cavalo(true);
-		pieces[1][7] = new Cavalo(false);
-		pieces[6][7] = new Cavalo(false);
+		pieces[4][0] = new Rei(Color.black);
+		pieces[4][7] = new Rei(Color.white);
+		pieces[0][0] = new Torre(Color.black);
+		pieces[7][0] = new Torre(Color.black);
+		pieces[0][7] = new Torre(Color.white);
+		pieces[7][7] = new Torre(Color.white);
+		pieces[3][0] = new Dama(Color.black);
+		pieces[3][7] = new Dama(Color.white);
+		pieces[2][0] = new Bispo(Color.black);
+		pieces[5][0] = new Bispo(Color.black);
+		pieces[2][7] = new Bispo(Color.white);
+		pieces[5][7] = new Bispo(Color.white);
+		pieces[1][0] = new Cavalo(Color.black);
+		pieces[6][0] = new Cavalo(Color.black);
+		pieces[1][7] = new Cavalo(Color.white);
+		pieces[6][7] = new Cavalo(Color.white);
 		isBlackTurn = false;
 	}
 	
 	public void moveList(int x, int y) {
-		if (isBlackTurn && pieces[x][y].isBlack) {
+		if (isBlackTurn && pieces[x][y].cor == Color.black) {
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (isTheWayClear(x,y,i,j)) {
 						if (pieces[x][y].canMove(x-i, y-j) && pieces[i][j].toString()=="vazio" ) {
 							pieces[i][j].isHighlighted= true;
 						}
-						if (pieces[x][y].canCapture(x-i, y-j) && !pieces[i][j].isBlack && pieces[i][j].toString()!="vazio") {
+						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.white && pieces[i][j].toString()!="vazio") {
 							pieces[i][j].isHighlighted= true;
 						}	
 					}	
 				}
 			}
-		}else if (!isBlackTurn && !pieces[x][y].isBlack) {
+		}else if (!isBlackTurn && pieces[x][y].cor == Color.white) {
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (isTheWayClear(x,y,i,j)) {
 						if (pieces[x][y].canMove(x-i, y-j) && pieces[i][j].toString()=="vazio" ) {
 							pieces[i][j].isHighlighted= true;
 						}
-						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].isBlack && pieces[i][j].toString()!="vazio") {
+						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.black && pieces[i][j].toString()!="vazio") {
 							pieces[i][j].isHighlighted= true;
 						}
 					}

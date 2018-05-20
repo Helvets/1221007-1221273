@@ -9,15 +9,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+
 public class Cavalo extends Piece{
 
-	public Cavalo(boolean isBlack) {
-		this.isBlack = isBlack;
+	public Cavalo(Color cor) {
+		this.cor = cor;
 		this.canJump = true;
 		this.isHighlighted = false;
 		this.isSelected = false;
 		try {
-			if (!isBlack)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_cavalo.gif"));
+			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_cavalo.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_cavalo.gif"));
 
 		}catch(IOException e) {
@@ -34,7 +35,7 @@ public class Cavalo extends Piece{
 		return (Math.abs(x) == 2 && Math.abs(y)==1) || (Math.abs(x) == 1 && Math.abs(y)==2);
 	}
 	public String toString() {
-		if(isBlack) {
+		if(this.cor == Color.black) {
 			return "cavalo-preto";
 		} else {
 			return "cavalo-branco";

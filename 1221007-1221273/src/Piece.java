@@ -8,9 +8,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+
 public abstract class Piece {
 	public boolean canJump;
-	public boolean isBlack;
+	public Color cor;
 	public boolean isHighlighted;
 	public boolean isSelected;
 	
@@ -18,7 +19,7 @@ public abstract class Piece {
 	protected Image img_preto;
 	
 	public void drawYourself(Graphics g, int positionX, int positionY, int squareWidth) {
-		if (isBlack) {
+		if (this.cor == Color.black) {
 			g.drawImage(img_preto, positionX, positionY, squareWidth, squareWidth, null);
 		} else {
 			g.drawImage(img_branco, positionX, positionY, squareWidth, squareWidth, null);

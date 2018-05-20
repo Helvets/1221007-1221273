@@ -10,12 +10,12 @@ import javax.swing.ImageIcon;
 
 public class Vago extends Piece {
 	public Vago() {
-		this.isBlack = false;
+		this.cor = Color.green;
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
 	}
-	//sobre-escrita
+	//sobre-esccrita
 	public void drawYourself(Graphics g, int positionX, int positionY, int squareWidth) {
 		Graphics2D g2d = (Graphics2D) g;
 			if (this.isHighlighted) {
