@@ -17,6 +17,7 @@ public class Cavalo extends Piece{
 		this.canJump = true;
 		this.isHighlighted = false;
 		this.isSelected = false;
+		this.isFirstTurn = false;
 		try {
 			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_cavalo.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_cavalo.gif"));

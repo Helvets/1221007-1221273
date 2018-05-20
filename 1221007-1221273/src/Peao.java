@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 
 
 public class Peao extends Piece{
-	public boolean isFirstTurn;
 	
 	public Peao(Color cor) {
 		this.cor = cor;
@@ -18,6 +17,7 @@ public class Peao extends Piece{
 		this.isHighlighted = false;
 		this.isSelected= false;
 		this.isFirstTurn = true;
+		
 		try {
 			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_peao.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_peao.gif"));
@@ -42,7 +42,7 @@ public class Peao extends Piece{
 				}
 			}
 		} else {
-			if (this.cor == Color.black) {
+			if (this.cor == Color.white) {
 				return y == 1 && x == 0;
 			} else {
 				return y == -1 && x == 0;

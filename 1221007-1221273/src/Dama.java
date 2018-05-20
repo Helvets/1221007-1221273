@@ -16,6 +16,7 @@ public class Dama extends Piece{
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
+		this.isFirstTurn = false;
 		try {
 			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_dama.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_dama.gif"));

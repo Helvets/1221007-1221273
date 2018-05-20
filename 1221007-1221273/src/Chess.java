@@ -166,7 +166,8 @@ public class Chess extends Board{
 	
 	public void move(int x, int y) {
 		pieces[x][y]=pieces[selected.i][selected.j];
-		pieces[x][y].isSelected=false;;
+		pieces[x][y].isSelected=false;
+		pieces[x][y].isFirstTurn=false;
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
 	}
