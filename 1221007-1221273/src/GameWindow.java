@@ -47,9 +47,7 @@ public class GameWindow extends JFrame implements MouseListener{
 			if (!xadrez.selected.someoneIsSelected) {
 				xadrez.pieces[selectedSquareX][selectedSquareY].isSelected = true;
 				xadrez.moveList(selectedSquareX, selectedSquareY);
-				xadrez.selected.i = selectedSquareX;
-				xadrez.selected.j = selectedSquareY;
-				xadrez.selected.someoneIsSelected = true;
+				xadrez.selected.SelectedUpdate(true, selectedSquareX, selectedSquareY);
 			} else if (xadrez.pieces[selectedSquareX][selectedSquareY].isHighlighted) {
 				xadrez.move(selectedSquareX, selectedSquareY);
 				xadrez.ClearSelecction();
@@ -59,9 +57,7 @@ public class GameWindow extends JFrame implements MouseListener{
 				xadrez.ClearSelecction();
 				xadrez.pieces[selectedSquareX][selectedSquareY].isSelected = true;
 				xadrez.moveList(selectedSquareX, selectedSquareY);
-				xadrez.selected.i = selectedSquareX;
-				xadrez.selected.j = selectedSquareY;
-				xadrez.selected.someoneIsSelected = true;
+				xadrez.selected.SelectedUpdate(true, selectedSquareX, selectedSquareY);
 			}
 			xadrez.repaint();
 		}

@@ -50,7 +50,7 @@ public class Chess extends Board{
 						if (pieces[x][y].canMove(x-i, y-j) && pieces[i][j].toString()=="vazio" ) {
 							pieces[i][j].isHighlighted= true;
 						}
-						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.white && pieces[i][j].toString()!="vazio") {
+						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.white) {
 							pieces[i][j].isHighlighted= true;
 						}	
 					}	
@@ -63,7 +63,7 @@ public class Chess extends Board{
 						if (pieces[x][y].canMove(x-i, y-j) && pieces[i][j].toString()=="vazio" ) {
 							pieces[i][j].isHighlighted= true;
 						}
-						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.black && pieces[i][j].toString()!="vazio") {
+						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.black) {
 							pieces[i][j].isHighlighted= true;
 						}
 					}
@@ -72,14 +72,16 @@ public class Chess extends Board{
 		}
 	}
 	
+	//retorna true se casa eh cavalo
+	//retorna true para as diagonais, verticais e horizontais livres de pecas
 	public boolean isTheWayClear(int x1, int y1, int x2, int y2) {
-		if (pieces[x1][y1].canJump) {
+		if (pieces[x1][y1].canJump) {  // cavalho
 			return true;
 		} 
 		int xDifference = x2 - x1;
 		int yDifference = y2 - y1;
-		if (Math.abs(xDifference) == Math.abs(yDifference)) {
-			if (x2 > x1 && y2 > y1) {
+		if (Math.abs(xDifference) == Math.abs(yDifference)) { //diagonal
+			if (x2 > x1 && y2 > y1) {			// inferior direita
 				x1++;
 				y1++;
 				while (x2 > x1 && y2 > y1) {
@@ -89,7 +91,7 @@ public class Chess extends Board{
 					x1++;
 					y1++;
 				}
-			} else if (x2 > x1 && y2 < y1) {
+			} else if (x2 > x1 && y2 < y1) {  //diagonal superior
 				x1++;
 				y1--;
 				while (x2 > x1 && y2 < y1) {
@@ -99,7 +101,7 @@ public class Chess extends Board{
 					x1++;
 					y1--;
 				}
-			} else if (x2 < x1 && y2 < y1) {
+			} else if (x2 < x1 && y2 < y1) {  // diagonal esquerda superior
 				x1--;
 				y1--;
 				while (x2 < x1 && y2 < y1) {
@@ -112,7 +114,7 @@ public class Chess extends Board{
 			} else {
 				x1--;
 				y1++;
-				while (x2 < x1 && y2 > y1) {
+				while (x2 < x1 && y2 > y1) {  //diagonal esquerda inferior
 					if (pieces[x1][y1].toString()!="vazio") {
 						return false;
 					}
@@ -121,29 +123,29 @@ public class Chess extends Board{
 				}
 			}
 		} else {
-			if (xDifference == 0) {
+			if (xDifference == 0) {   //vertical
 				if (y2 > y1) {
-					for (int i = y1+1; i < y2; i++) {
+					for (int i = y1+1; i < y2; i++) { // para baixo
 						if (pieces[x1][i].toString()!="vazio") {
 							return false;
 						}
 					}
 				} else {
-					for (int i = y1-1; i > y2; i--) {
+					for (int i = y1-1; i > y2; i--) { //para cima
 						if (pieces[x1][i].toString()!="vazio") {
 							return false;
 						}
 					}
 				}
-			} else {
+			} else {		// horizontal
 				if (x2 > x1) {
-					for (int i = x1+1; i < x2; i++) {
+					for (int i = x1+1; i < x2; i++) {  //direita
 						if (pieces[i][y1].toString()!="vazio") {
 							return false;
 						}
 					}
 				} else {
-					for (int i = x1-1; i > x2; i--) {
+					for (int i = x1-1; i > x2; i--) { //esquerda
 						if (pieces[i][y1].toString()!="vazio") {
 							return false;
 						}
@@ -154,6 +156,7 @@ public class Chess extends Board{
 		return true;
 	}
 	
+	//limpa as selecoes e destaques
 	public void ClearSelecction() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -164,10 +167,11 @@ public class Chess extends Board{
 
 	}
 	
+	
 	public void move(int x, int y) {
 		pieces[x][y]=pieces[selected.i][selected.j];
 		pieces[x][y].isSelected=false;
-		pieces[x][y].isFirstTurn=false;
+		pieces[x][y].isFirstMove=false;
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
 	}

@@ -16,7 +16,7 @@ public class Peao extends Piece{
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected= false;
-		this.isFirstTurn = true;
+		this.isFirstMove = true;
 		
 		try {
 			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_peao.gif"));
@@ -29,7 +29,7 @@ public class Peao extends Piece{
 	}
 
 	public boolean canMove(int x, int y) {
-		if (isFirstTurn) {
+		if (isFirstMove) {
 			if (this.cor == Color.white) {
 				if ((y == 1 && x == 0) || (y == 2 && x == 0)) {
 					return true;

@@ -6,7 +6,12 @@ public class Selected {
 	
 	public Selected() {
 		someoneIsSelected=false;
-		int i=-1;
-		int j=-1;
+		i=-1;
+		j=-1;	
+	}
+	public void SelectedUpdate(boolean b, int x, int y) {
+		someoneIsSelected=b;
+		i=x;
+		j=y;	
 	}
 }

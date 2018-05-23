@@ -16,7 +16,7 @@ public class Bispo extends Piece{
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
-		this.isFirstTurn = false;
+		this.isFirstMove = false;
 		try {
 			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_bispo.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_bispo.gif"));

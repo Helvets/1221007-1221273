@@ -14,7 +14,7 @@ public class Vago extends Piece {
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
-		this.isFirstTurn = false;
+		this.isFirstMove = false;
 	}
 	//sobre-esccrita
 	public void drawYourself(Graphics g, int positionX, int positionY, int squareWidth) {
