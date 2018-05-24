@@ -21,7 +21,7 @@ public class GameWindow extends JFrame implements MouseListener{
 		xadrez.setBackground(Color.GREEN);
 		//xadrez.iniChessBoard();
 		add(xadrez);
-
+		addMouseListener(this);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
@@ -34,7 +34,7 @@ public class GameWindow extends JFrame implements MouseListener{
 		//setSize(size*8+BOARD_MARGIN*2, size*8+BOARD_MARGIN*3);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		addMouseListener(this);
+
 		}
 	
 	public void mouseClicked(MouseEvent e) {
