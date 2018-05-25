@@ -16,7 +16,9 @@ public class Bispo extends Piece{
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
-		this.isFirstMove = false;
+		this.isFirstMove = false; //Caso a peça possa fazer um movimento diferenciado no primeiro turno, será true
+		
+		//Tratamento de Exceção
 		try {
 			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_bispo.gif"));
 			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_bispo.gif"));
@@ -28,13 +30,13 @@ public class Bispo extends Piece{
 	}
 
 	public boolean canMove(int x, int y) {
-		return (Math.abs(x) == Math.abs(y)) && !(x==0 && y ==0);
+		return (Math.abs(x) == Math.abs(y)) && !(x==0 && y ==0); //Retorna se o movimento é valido ou não
 	}
 
 	public boolean canCapture(int x, int y) {
-		return (Math.abs(x) == Math.abs(y)) && !(x==0 && y ==0);
+		return (Math.abs(x) == Math.abs(y)) && !(x==0 && y ==0); //Retorna se uma peça pode ser capturada ou não
 	}
-	public String toString() {
+	public String toString() { //Identifica a peça
 		if(this.cor == Color.black) {
 			return "bispo-preto";
 		} else {

@@ -7,7 +7,7 @@ public class Board extends JPanel {
 	Piece pieces[][] = new Piece[8][8];
 	
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g); //oq é isso?
+		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
 		//Desenha retangulos
@@ -16,16 +16,17 @@ public class Board extends JPanel {
 			for(int j =0; j < 8; j++) {
 				Rectangle2D tile = new Rectangle2D.Double(i*size, j*size, size, size);
 				
-				if ((i+j) % 2 == 0)
+				if ((i+j) % 2 == 0) //Caso o quadrado for par, pinta-se de branco
 				{
 					g2d.setPaint(Color.WHITE);
 				}
-				else
+				else //Caso for impar, pinta-se de preto
 				{
 					g2d.setPaint(Color.BLACK);
 				}
 				
 				g2d.fill(tile);	
+				
 				//Desenha pecas
 				if(pieces[i][j].toString() != "vazio" || pieces[i][j].isHighlighted )
 				{

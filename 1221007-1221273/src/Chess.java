@@ -14,15 +14,16 @@ public class Chess extends Board{
 	public Chess() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (j == 1) {
+				if (j == 1) { //Preenche todos peões pretos na matriz de peças
 					pieces[i][j] = new Peao(Color.black);
-				} else if (j == 6) {
+				} else if (j == 6) { //Preenche todos peões brancos na matriz de peças
 					pieces[i][j] = new Peao(Color.white);
 				} else {
 					pieces[i][j] = new Vago();
 				}
 			}
 		}
+		//Preenche matriz com as demais peças
 		pieces[4][0] = new Rei(Color.black);
 		pieces[4][7] = new Rei(Color.white);
 		pieces[0][0] = new Torre(Color.black);
