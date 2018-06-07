@@ -1,17 +1,49 @@
-import javax.swing.JPanel;
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.Stack;
+package game;
 
-public class Chess extends Board{
-	public static final int size = 50;
-	public boolean isBlackTurn;
-	public Selected selected = new Selected();
+import control.*;
+import pieces.*;
+
+import static window.GameWindow.*;
+
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+
+
+public class Chess extends MouseAdapter implements MouseListener, Observed {
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	}
+	private static Chess chess = null;
+	private Observer obs;
+	private Piece[][] pieces = new Piece[8][8];
+	private boolean isBlackTurn;
+	private Selected selected = new Selected();
+
 	public Chess() {
+		ChessInitializer();
+	}
+	
+	public static Chess getChess() {
+		if(chess == null)
+			chess = new Chess();
+		addMouseListener(chess);
+		return chess;
+	}
+	public Piece[][] getPieces() {
+		return this.pieces;
+	}
+	
+	public void add(Observer o) {
+		obs = o;
+		
+	}
+	
+	public void remove(Observer o) {
+		
+	}
+
+	private void ChessInitializer() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (j == 1) { //Preenche todos peões pretos na matriz de peças
@@ -43,6 +75,9 @@ public class Chess extends Board{
 		isBlackTurn = false;
 	}
 	
+	
+	//Ilumina/destaca movementos validos
+	//usado na implementacao do movimento
 	public void moveList(int x, int y) {
 		if (isBlackTurn && pieces[x][y].cor == Color.black) {
 			for (int i = 0; i < 8; i++) {
@@ -156,6 +191,7 @@ public class Chess extends Board{
 		}
 		return true;
 	}
+
 	
 	//limpa as selecoes e destaques
 	public void ClearSelecction() {
@@ -176,4 +212,50 @@ public class Chess extends Board{
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
 	}
+	
+
+	
+	public void mouseClicked(MouseEvent e) {
+
+		int selectedSquareX = (e.getX() - 8) / size;
+		int selectedSquareY = (e.getY() - 30) / size;
+		System.out.printf("%d ", selectedSquareX);
+		System.out.printf("%d\n", selectedSquareY);
+		if (selectedSquareX >= 0 && selectedSquareY >= 0 && selectedSquareX < 8 && selectedSquareY < 8) {
+			if (!selected.someoneIsSelected) {
+				pieces[selectedSquareX][selectedSquareY].isSelected = true;
+				moveList(selectedSquareX, selectedSquareY);
+				selected.SelectedUpdate(true, selectedSquareX, selectedSquareY);
+			} else if (pieces[selectedSquareX][selectedSquareY].isHighlighted) {
+				move(selectedSquareX, selectedSquareY);
+				ClearSelecction();
+				selected.someoneIsSelected = false;
+			} else if ((isBlackTurn && pieces[selectedSquareX][selectedSquareY].cor == Color.black)
+					|| (!this.isBlackTurn &&pieces[selectedSquareX][selectedSquareY].cor == Color.white)) {
+				ClearSelecction();
+				pieces[selectedSquareX][selectedSquareY].isSelected = true;
+				moveList(selectedSquareX, selectedSquareY);
+				selected.SelectedUpdate(true, selectedSquareX, selectedSquareY);
+			}
+			obs.notify(this);
+		}
+
+	}
+
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+
 }

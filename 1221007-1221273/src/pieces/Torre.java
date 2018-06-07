@@ -1,3 +1,4 @@
+package pieces;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,37 +10,41 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 
-public class Rei extends Piece {
-	public Rei(Color cor) {
+public class Torre extends Piece{
+	
+	public Torre(Color cor) {
 		this.cor = cor;
-		this.canJump = true;
+		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
+		this.isFirstMove = false;
 		try {
-			if (this.cor == Color.white) img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_rei.gif"));
-			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_rei.gif"));
+			if (this.cor == Color.white) img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_torre.gif"));
+			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_torre.gif"));
 
-			
 		}catch(IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
 	}
-	
+
 
 	public boolean canMove(int x, int y) {
-		return ((x>=-1 && x<=1 && y>=-1 && y<=1) && !(x == 0 && y == 0));
+		return (x==0 || y==0) && !(x==0 && y==0);
 	}
 
-
 	public boolean canCapture(int x, int y) {
-		return ((x>=-1 && x<=1 && y>=-1 && y<=1) && !(x == 0 && y == 0));
+		return (x==0 || y==0) && !(x==0 && y==0);
 	}
 	public String toString() {
 		if(this.cor == Color.black) {
-			return "rei-preto";
+			return "torre-preta";
 		} else {
-			return "rei-branco";
+			return "torre-branca";
 		}
 	}
+	
+	
 }
+
+

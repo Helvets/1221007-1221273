@@ -1,4 +1,4 @@
-
+package game;
 public class Selected {
 	public boolean someoneIsSelected;
 	public int i;
