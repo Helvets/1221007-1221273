@@ -1,17 +1,40 @@
-import javax.swing.JPanel;
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.Stack;
+package game;
 
-public class Chess extends Board{
-	public static final int size = 50;
-	public boolean isBlackTurn;
-	public Selected selected = new Selected();
+import control.*;
+import pieces.*;
+import java.awt.*;
+
+public class Chess implements  Observed {
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	}
+	private static Chess chess = null;
+	private Observer obs;
+	private Piece[][] pieces = new Piece[8][8];
+	private boolean isBlackTurn;
+	private Selected selected = new Selected();
+
 	public Chess() {
+		ChessInitializer();
+	}
+	
+	public static Chess getChess() {
+		if(chess == null)
+			chess = new Chess();
+		return chess;
+	}
+	public Piece[][] getPieces() {
+		return this.pieces;
+	}
+	
+	public void add(Observer o) {
+		obs = o;
+		
+	}
+	
+	public void remove(Observer o) {
+		
+	}
+
+	private void ChessInitializer() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (j == 1) { //Preenche todos peões pretos na matriz de peças
@@ -43,7 +66,10 @@ public class Chess extends Board{
 		isBlackTurn = false;
 	}
 	
-	public void moveList(int x, int y) {
+	
+	//Ilumina/destaca movementos validos
+	//usado na implementacao do movimento
+	private void moveList(int x, int y) {
 		if (isBlackTurn && pieces[x][y].cor == Color.black) {
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
@@ -75,7 +101,7 @@ public class Chess extends Board{
 	
 	//retorna true se casa eh cavalo
 	//retorna true para as diagonais, verticais e horizontais livres de pecas
-	public boolean isTheWayClear(int x1, int y1, int x2, int y2) {
+	private boolean isTheWayClear(int x1, int y1, int x2, int y2) {
 		if (pieces[x1][y1].canJump) {  // cavalho
 			return true;
 		} 
@@ -156,9 +182,10 @@ public class Chess extends Board{
 		}
 		return true;
 	}
+
 	
 	//limpa as selecoes e destaques
-	public void ClearSelecction() {
+	private void ClearSelecction() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				pieces[i][j].isHighlighted=false;
@@ -169,11 +196,36 @@ public class Chess extends Board{
 	}
 	
 	
-	public void move(int x, int y) {
+	private void move(int x, int y) {
 		pieces[x][y]=pieces[selected.i][selected.j];
 		pieces[x][y].isSelected=false;
 		pieces[x][y].isFirstMove=false;
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
 	}
+	
+	//executa click
+	public void click(int i, int j) {
+		System.out.printf("%s\n", pieces[i][j].toString() );
+		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
+			if (!selected.someoneIsSelected) {
+				pieces[i][j].isSelected = true;
+				moveList(i, j);
+				selected.SelectedUpdate(true, i, j);
+			} else if (pieces[i][j].isHighlighted) {
+				move(i, j);
+				ClearSelecction();
+				selected.someoneIsSelected = false;
+			} else if ((isBlackTurn && pieces[i][j].cor == Color.black)
+					|| (!this.isBlackTurn &&pieces[i][j].cor == Color.white)) {
+				ClearSelecction();
+				pieces[i][j].isSelected = true;
+				moveList(i, j);
+				selected.SelectedUpdate(true, i, j);
+			}
+			obs.notify(this);
+		}	
+	}
+
+
 }
