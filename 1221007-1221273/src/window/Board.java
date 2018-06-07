@@ -1,13 +1,9 @@
 package window;
-import window.GameWindow;
 
 import javax.swing.JPanel;
-
 import control.*;
 import pieces.*;
-
 import static window.GameWindow.*;
-
 import java.awt.*;
 import java.awt.geom.*;
 
@@ -17,7 +13,6 @@ public class Board extends JPanel implements Observer{
 	private Observed observed;
 	
 	public Board() {
-		
 		Controller.getController().register(this);
 		observed = Controller.getObserved();
 		pieces = observed.getPieces();
