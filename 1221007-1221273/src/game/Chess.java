@@ -37,16 +37,16 @@ public class Chess implements  Observed {
 	private void ChessInitializer() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (j == 1) { //Preenche todos pe�es pretos na matriz de pe�as
+				if (j == 1) { //Preenche todos peões pretos na matriz de peças
 					pieces[i][j] = new Peao(Color.black);
-				} else if (j == 6) { //Preenche todos pe�es brancos na matriz de pe�as
+				} else if (j == 6) { //Preenche todos peões brancos na matriz de peças
 					pieces[i][j] = new Peao(Color.white);
 				} else {
 					pieces[i][j] = new Vago();
 				}
 			}
 		}
-		//Preenche matriz com as demais pe�as
+		//Preenche matriz com as demais peças
 		pieces[4][0] = new Rei(Color.black);
 		pieces[4][7] = new Rei(Color.white);
 		pieces[0][0] = new Torre(Color.black);
@@ -226,6 +226,46 @@ public class Chess implements  Observed {
 			obs.notify(this);
 		}	
 	}
+	
+	//roque
+	public boolean castling(boolean isKingSide) {
+	
+		//Verificação roque pequeno rei preto
+		if(isBlackTurn && isKingSide && pieces[5][0]==null && pieces[6][0]==null &&
+				(pieces[4][0].toString().compareTo("rei-preto")==0) &&
+				(pieces[7][0].toString().compareTo("torre-preta")==0)) 
+		{
+	
+		}
+		
+		//verificação roque grande rei preto
+		else if (isBlackTurn && !isKingSide && pieces[3][0]==null && pieces[2][0]==null && pieces[1][0] == null &&
+				(pieces[4][0].toString().compareTo("rei-preto")==0) &&
+				(pieces[0][0].toString().compareTo("torre-preta")==0))		
+		{
+		
+		}
 
+		//verificação roque pequeno rei branco
+		else if(!isBlackTurn && isKingSide && pieces[5][7]==null && pieces[6][7]==null &&
+				(pieces[4][7].toString().compareTo("rei-branco")==0) &&
+				(pieces[7][7].toString().compareTo("torre-branca")==0))
+		{
+			
+		}
+		
+		//verificação roque grande rei branco
+		else if (!isBlackTurn && !isKingSide && pieces[3][7]==null && pieces[2][7]==null && pieces[1][7] == null &&
+				(pieces[4][7].toString().compareTo("rei-branco")==0) &&
+				(pieces[0][7].toString().compareTo("torre-branca")==0))
+		{
+			
+		}
+		
+		return true;
+	}
+	
+	
+	
 
 }
