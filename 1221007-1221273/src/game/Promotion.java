@@ -71,7 +71,7 @@ public class Promotion extends JPanel{
 	public void mostrar(int i, int j) {
 		int x =i*size;
 		int y =j*size;
-		popup.show(board.this, 500,500);
+		popup.show(board, x,y);
 	}
 
 }
