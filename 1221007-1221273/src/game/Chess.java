@@ -206,6 +206,7 @@ public class Chess implements  Observed {
 	
 	//executa click
 	public void click(int i, int j) {
+		System.out.printf("[%d][%d] ", i,j);
 		System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
 			if (!selected.someoneIsSelected) { 					//Se ninguém está selecionado, entra aqui
@@ -222,74 +223,61 @@ public class Chess implements  Observed {
 				
 				
 			} 
-			
 			else if ((isBlackTurn && pieces[i][j].cor == Color.black)
 					|| (!this.isBlackTurn &&pieces[i][j].cor == Color.white)) {
-				
-					if (pieces[selected.i][selected.j].toString() == "rei-preto" && pieces[i][j].toString() == "torre-preta")
-					{
-						//chama castling
-						System.out.println("roque preto");
-					}
-					else if(pieces[selected.i][selected.j].toString() == "rei-branco" && pieces[i][j].toString() == "torre-branca") {
-					
-						//chama castling
-						System.out.println("roque branco");
-					}
-					else {
-				
-						ClearSelecction();
-						pieces[i][j].isSelected = true;
-						moveList(i, j);
-						selected.SelectedUpdate(true, i, j);
-					}
+				if (!roque(i,j)) { //roque
+					ClearSelecction();
+					pieces[i][j].isSelected = true;
+					moveList(i, j);
+					selected.SelectedUpdate(true, i, j);
 				}
 			}
-			
-			
-			
-			obs.notify(this);
-}	
-
-
-	//roque
-	public boolean castling(boolean isKingSide) {
-	
-		//Verificação roque pequeno rei preto
-		if(isBlackTurn && isKingSide && pieces[5][0]==null && pieces[6][0]==null &&
-				(pieces[4][0].toString().compareTo("rei-preto")==0) &&
-				(pieces[7][0].toString().compareTo("torre-preta")==0)) 
-		{
-	
+		obs.notify(this);
 		}
-		
-		//verificação roque grande rei preto
-		else if (isBlackTurn && !isKingSide && pieces[3][0]==null && pieces[2][0]==null && pieces[1][0] == null &&
-				(pieces[4][0].toString().compareTo("rei-preto")==0) &&
-				(pieces[0][0].toString().compareTo("torre-preta")==0))		
-		{
-		
-		}
-
-		//verificação roque pequeno rei branco
-		else if(!isBlackTurn && isKingSide && pieces[5][7]==null && pieces[6][7]==null &&
-				(pieces[4][7].toString().compareTo("rei-branco")==0) &&
-				(pieces[7][7].toString().compareTo("torre-branca")==0))
-		{
-			
-		}
-		
-		//verificação roque grande rei branco
-		else if (!isBlackTurn && !isKingSide && pieces[3][7]==null && pieces[2][7]==null && pieces[1][7] == null &&
-				(pieces[4][7].toString().compareTo("rei-branco")==0) &&
-				(pieces[0][7].toString().compareTo("torre-branca")==0))
-		{
-			
-		}
-		
-		return true;
 	}
 	
-	
+	public boolean roque(int i, int j) 
+	{
+		if (pieces[selected.i][selected.j].toString() == "rei-preto" && pieces[i][j].toString() == "torre-preta" &&
+				pieces[selected.i][selected.j].isFirstMove && pieces[i][j].isFirstMove)
+		{
+			if (i==0 && pieces[i+1][j].toString() =="vazio" && pieces[i+2][j].toString() =="vazio" && pieces[i+3][j].toString() =="vazio") {
+				pieces[i+3][j]=pieces[i][j];
+				pieces[i][j] = new Vago();	
+				move(i+2,j);
+				System.out.println("roque preto longo");
+				return true;
+			}
+			if (i==7 && pieces[i-1][j].toString() =="vazio" && pieces[i-2][j].toString() =="vazio") {
+				pieces[i-2][j]=pieces[i][j];
+				pieces[i][j] = new Vago();	
+				move(i-1,j);
+				System.out.println("roque Preto curto");
+				return true;
+			}
 
+		}
+		else if(pieces[selected.i][selected.j].toString() == "rei-branco" && pieces[i][j].toString() == "torre-branca"&&
+				pieces[selected.i][selected.j].isFirstMove && pieces[i][j].isFirstMove) 
+		{
+			if (i==0 && pieces[i+1][j].toString() =="vazio" && pieces[i+2][j].toString() =="vazio" && pieces[i+3][j].toString() =="vazio") 
+			{
+				pieces[i+3][j]=pieces[i][j];
+				pieces[i][j] = new Vago();	
+				move(i+2,j);
+				System.out.println("roque branco longo");
+				return true;
+				
+			}
+			if (i==7 && pieces[i-1][j].toString() =="vazio" && pieces[i-2][j].toString() =="vazio")
+			{
+				pieces[i-2][j]=pieces[i][j];
+				pieces[i][j] = new Vago();	
+				move(i-1,j);
+				System.out.println("roque branco curto");
+				return true;
+			}
+		}
+		return false;
+	}
 }

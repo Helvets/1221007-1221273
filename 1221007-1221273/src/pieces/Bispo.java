@@ -13,7 +13,6 @@ public class Bispo extends Piece{
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
-		this.isFirstMove = false; //Caso a peça possa fazer um movimento diferenciado no primeiro turno, será true
 		
 		//Tratamento de Exceção
 		try {
