@@ -5,6 +5,7 @@ import pieces.*;
 import java.awt.*;
 
 
+
 public class Chess implements  Observed {
 	
 	private static Chess chess = null;
@@ -65,6 +66,7 @@ public class Chess implements  Observed {
 		pieces[1][7] = new Cavalo(Color.white);
 		pieces[6][7] = new Cavalo(Color.white);
 		isBlackTurn = false;
+		
 	}
 	
 	
@@ -198,12 +200,10 @@ public class Chess implements  Observed {
 
 	private void move(int x, int y) {
 		if (pieces[selected.i][selected.j].toString() == "peao-preto" && y==7) {//promocao preta
-		    //Promotion a = new Promotion(int i, int j);
-
+			obs.notifyPromotion(this,x, y,Color.black);
 		}
 		if (pieces[selected.i][selected.j].toString() == "peao-branco" && y==0) {//promocao branca
-		    //Promotion a = new Promotion(int i, int j);
-
+			obs.notifyPromotion(this,x,y,Color.white);
 		}
 		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j sao guardados na chamada da "click"
 		pieces[x][y].isSelected=false;

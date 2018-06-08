@@ -1,7 +1,9 @@
 package window;
 
 import javax.swing.*;
+
 import control.Controller;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -32,8 +34,8 @@ public class GameWindow extends JFrame implements MouseListener{
 		setBounds(x,y,LARG_PADRAO, ALT_PADRAO);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		}
-	
+	}
+
 	public void mouseClicked(MouseEvent e) {
 
 		int selectedSquareX = (e.getX() - 8) / size;
