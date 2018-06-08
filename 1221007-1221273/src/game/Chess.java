@@ -4,7 +4,6 @@ import control.*;
 import pieces.*;
 import java.awt.*;
 
-import javax.swing.JFrame;
 
 public class Chess implements  Observed {
 	
