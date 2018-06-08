@@ -1,7 +1,6 @@
 package control;
 
 import game.Chess;
-
 public class Controller {
 	private static Controller controller = null;
 	private static Observed observed = null;
@@ -26,6 +25,7 @@ public class Controller {
 	public static Observed getObserved() {
 		return observed;
 	}
+	
 	public void clickAction(int i, int j) {
 		Chess.getChess().click(i, j);
 	}

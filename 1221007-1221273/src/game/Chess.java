@@ -4,6 +4,8 @@ import control.*;
 import pieces.*;
 import java.awt.*;
 
+import javax.swing.JPanel;
+
 
 
 public class Chess implements  Observed {
@@ -200,10 +202,18 @@ public class Chess implements  Observed {
 
 	private void move(int x, int y) {
 		if (pieces[selected.i][selected.j].toString() == "peao-preto" && y==7) {//promocao preta
-			obs.notifyPromotion(this,x, y,Color.black);
+			//obs.notifyPromotion(this,x, y,Color.black);
+			Promotion a =new Promotion(x, y, Color.black);
+			a.mostrar(x, y);
+			obs.notify();
+			//obs.notifyPromotion(this,x, y,Color.black);
 		}
 		if (pieces[selected.i][selected.j].toString() == "peao-branco" && y==0) {//promocao branca
-			obs.notifyPromotion(this,x,y,Color.white);
+			//obs.notifyPromotion(this,x,y,Color.white);
+			Promotion a =new Promotion(x, y, Color.white);
+			a.mostrar(x, y); 
+			obs.notify();
+			//obs.notifyPromotion(this,x, y,Color.black);
 		}
 		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j sao guardados na chamada da "click"
 		pieces[x][y].isSelected=false;
@@ -286,4 +296,5 @@ public class Chess implements  Observed {
 		}
 		return false;
 	}
+
 }
