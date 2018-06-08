@@ -13,6 +13,8 @@ public class GameWindow extends JFrame implements MouseListener{
 	protected final int ALT_PADRAO = size*8 +50;
 	Controller controller;
 	Board board = new Board();
+
+	
 	public GameWindow (Controller cont) {
 		board.setLayout(null);
 		board.setBackground(Color.GREEN);

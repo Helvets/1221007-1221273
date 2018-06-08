@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import control.*;
 import pieces.*;
 import static window.GameWindow.*;
+import window.GameWindow.*;
 import java.awt.*;
 import java.awt.geom.*;
 
@@ -59,4 +60,5 @@ public class Board extends JPanel implements Observer{
 	public void notify(Observed o) {
 		repaint();
 	}
+	
 }

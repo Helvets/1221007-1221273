@@ -4,11 +4,13 @@ import control.*;
 import pieces.*;
 import java.awt.*;
 
+import javax.swing.JFrame;
+
 public class Chess implements  Observed {
 	
 	private static Chess chess = null;
 	private Observer obs;
-	private Piece[][] pieces = new Piece[8][8];
+	public Piece[][] pieces = new Piece[8][8];
 	private boolean isBlackTurn;
 	private Selected selected = new Selected();
 
@@ -37,9 +39,9 @@ public class Chess implements  Observed {
 	private void ChessInitializer() {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (j == 1) { //Preenche todos peões pretos na matriz de peças
+				if (j == 1) { //Preenche todos peos pretos na matriz de peoas
 					pieces[i][j] = new Peao(Color.black);
-				} else if (j == 6) { //Preenche todos peões brancos na matriz de peças
+				} else if (j == 6) { //Preenche todos peões brancos na matriz de peoas
 					pieces[i][j] = new Peao(Color.white);
 				} else {
 					pieces[i][j] = new Vago();
@@ -196,7 +198,15 @@ public class Chess implements  Observed {
 	}
 
 	private void move(int x, int y) {
-		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j são guardados na chamada da "click"
+		if (pieces[selected.i][selected.j].toString() == "peao-preto" && y==7) {//promocao preta
+		    //Promotion a = new Promotion(int i, int j);
+
+		}
+		if (pieces[selected.i][selected.j].toString() == "peao-branco" && y==0) {//promocao branca
+		    //Promotion a = new Promotion(int i, int j);
+
+		}
+		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j sao guardados na chamada da "click"
 		pieces[x][y].isSelected=false;
 		pieces[x][y].isFirstMove=false;
 		pieces[selected.i][selected.j]= new Vago();
@@ -209,19 +219,16 @@ public class Chess implements  Observed {
 		System.out.printf("[%d][%d] ", i,j);
 		System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
-			if (!selected.someoneIsSelected) { 					//Se ninguém está selecionado, entra aqui
-				pieces[i][j].isSelected = true; 				//A peça está selecionada
+			if (!selected.someoneIsSelected) { 					//Se ninguaom esta� selecionado, entra aqui
+				pieces[i][j].isSelected = true; 				//A peca esta� selecionada
 				moveList(i, j); 								//movimentos que a peça pode fazer
 				selected.SelectedUpdate(true, i, j); 			//Atualiza dados da peça selecionada, agora a peça selecionada está guardada em selected
 			} 
 			
-			else if (pieces[i][j].isHighlighted) {				//Se clicou onde está com Highlight (movimento permitido) entra aqui
-				move(i, j);										//Move a peça
+			else if (pieces[i][j].isHighlighted) {				//Se clicou onde esta� com Highlight (movimento permitido) entra aqui
+				move(i, j);										//Move a peca
 				ClearSelecction();
 				selected.someoneIsSelected = false;
-				
-				
-				
 			} 
 			else if ((isBlackTurn && pieces[i][j].cor == Color.black)
 					|| (!this.isBlackTurn &&pieces[i][j].cor == Color.white)) {
