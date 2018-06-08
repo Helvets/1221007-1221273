@@ -194,39 +194,64 @@ public class Chess implements  Observed {
 		}
 
 	}
-	
-	
+
 	private void move(int x, int y) {
-		pieces[x][y]=pieces[selected.i][selected.j];
+		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j são guardados na chamada da "click"
 		pieces[x][y].isSelected=false;
 		pieces[x][y].isFirstMove=false;
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
+		
 	}
 	
 	//executa click
 	public void click(int i, int j) {
 		System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
-			if (!selected.someoneIsSelected) {
-				pieces[i][j].isSelected = true;
-				moveList(i, j);
-				selected.SelectedUpdate(true, i, j);
-			} else if (pieces[i][j].isHighlighted) {
-				move(i, j);
+			if (!selected.someoneIsSelected) { 					//Se ninguém está selecionado, entra aqui
+				pieces[i][j].isSelected = true; 				//A peça está selecionada
+				moveList(i, j); 								//movimentos que a peça pode fazer
+				selected.SelectedUpdate(true, i, j); 			//Atualiza dados da peça selecionada, agora a peça selecionada está guardada em selected
+			} 
+			
+			else if (pieces[i][j].isHighlighted) {				//Se clicou onde está com Highlight (movimento permitido) entra aqui
+				move(i, j);										//Move a peça
 				ClearSelecction();
 				selected.someoneIsSelected = false;
-			} else if ((isBlackTurn && pieces[i][j].cor == Color.black)
+				
+				
+				
+			} 
+			
+			else if ((isBlackTurn && pieces[i][j].cor == Color.black)
 					|| (!this.isBlackTurn &&pieces[i][j].cor == Color.white)) {
-				ClearSelecction();
-				pieces[i][j].isSelected = true;
-				moveList(i, j);
-				selected.SelectedUpdate(true, i, j);
+				
+					if (pieces[selected.i][selected.j].toString() == "rei-preto" && pieces[i][j].toString() == "torre-preta")
+					{
+						//chama castling
+						System.out.println("roque preto");
+					}
+					else if(pieces[selected.i][selected.j].toString() == "rei-branco" && pieces[i][j].toString() == "torre-branca") {
+					
+						//chama castling
+						System.out.println("roque branco");
+					}
+					else {
+				
+						ClearSelecction();
+						pieces[i][j].isSelected = true;
+						moveList(i, j);
+						selected.SelectedUpdate(true, i, j);
+					}
+				}
 			}
+			
+			
+			
 			obs.notify(this);
-		}	
-	}
-	
+}	
+
+
 	//roque
 	public boolean castling(boolean isKingSide) {
 	
@@ -264,7 +289,6 @@ public class Chess implements  Observed {
 		
 		return true;
 	}
-	
 	
 	
 
