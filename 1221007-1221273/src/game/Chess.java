@@ -4,8 +4,6 @@ import control.*;
 import pieces.*;
 import java.awt.*;
 
-
-
 public class Chess implements  Observed {
 	
 	private static Chess chess = null;
@@ -13,7 +11,7 @@ public class Chess implements  Observed {
 	public Piece[][] pieces = new Piece[8][8];
 	private boolean isBlackTurn;
 	private Selected selected = new Selected();
-
+	Promotion a;
 	public Chess() {
 		ChessInitializer();
 	}
@@ -200,17 +198,19 @@ public class Chess implements  Observed {
 
 	private void move(int x, int y) {
 		if (pieces[selected.i][selected.j].toString() == "peao-preto" && y==7) {//promocao preta
-			obs.notifyPromotion(this,x, y,Color.black);
+			a=new Promotion (x, y, Color.black, obs);
+			a.popupShow(x, y);
 		}
-		if (pieces[selected.i][selected.j].toString() == "peao-branco" && y==0) {//promocao branca
-			obs.notifyPromotion(this,x,y,Color.white);
+		else if (pieces[selected.i][selected.j].toString() == "peao-branco" && y==0) {//promocao branca
+			a=new Promotion (x, y, Color.white, obs);
+			a.popupShow(x, y);
 		}
+
 		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j sao guardados na chamada da "click"
 		pieces[x][y].isSelected=false;
 		pieces[x][y].isFirstMove=false;
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
-		
 	}
 	
 	//executa click
@@ -218,33 +218,32 @@ public class Chess implements  Observed {
 		System.out.printf("[%d][%d] ", i,j);
 		System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
-			if (!selected.someoneIsSelected) { 					//Se ninguaom esta¡ selecionado, entra aqui
+			if (!selected.someoneIsSelected) { 					//Se ninguem esta¡ selecionado, entra aqui
 				pieces[i][j].isSelected = true; 				//A peca esta¡ selecionada
 				moveList(i, j); 								//movimentos que a peÃ§a pode fazer
 				selected.SelectedUpdate(true, i, j); 			//Atualiza dados da peÃ§a selecionada, agora a peÃ§a selecionada estÃ¡ guardada em selected
 			} 
-			
 			else if (pieces[i][j].isHighlighted) {				//Se clicou onde esta¡ com Highlight (movimento permitido) entra aqui
 				move(i, j);										//Move a peca
 				ClearSelecction();
 				selected.someoneIsSelected = false;
-			} 
-			else if ((isBlackTurn && pieces[i][j].cor == Color.black)
-					|| (!this.isBlackTurn &&pieces[i][j].cor == Color.white)) {
-				if (!roque(i,j)) { //roque
+			} else if (roque(i,j)) {
+				ClearSelecction();
+				selected.someoneIsSelected = false;
+			}else if ((isBlackTurn && pieces[i][j].cor == Color.black) || (!isBlackTurn &&pieces[i][j].cor == Color.white)) 
+			{
 					ClearSelecction();
 					pieces[i][j].isSelected = true;
 					moveList(i, j);
 					selected.SelectedUpdate(true, i, j);
-				}
 			}
-		obs.notify(this);
 		}
+		obs.notify(this);
 	}
 	
 	public boolean roque(int i, int j) 
 	{
-		if (pieces[selected.i][selected.j].toString() == "rei-preto" && pieces[i][j].toString() == "torre-preta" &&
+		if (isBlackTurn && pieces[selected.i][selected.j].toString() == "rei-preto" && pieces[i][j].toString() == "torre-preta" &&
 				pieces[selected.i][selected.j].isFirstMove && pieces[i][j].isFirstMove)
 		{
 			if (i==0 && pieces[i+1][j].toString() =="vazio" && pieces[i+2][j].toString() =="vazio" && pieces[i+3][j].toString() =="vazio") {
@@ -253,8 +252,7 @@ public class Chess implements  Observed {
 				move(i+2,j);
 				System.out.println("roque preto longo");
 				return true;
-			}
-			if (i==7 && pieces[i-1][j].toString() =="vazio" && pieces[i-2][j].toString() =="vazio") {
+			}else if (i==7 && pieces[i-1][j].toString() =="vazio" && pieces[i-2][j].toString() =="vazio") {
 				pieces[i-2][j]=pieces[i][j];
 				pieces[i][j] = new Vago();	
 				move(i-1,j);
@@ -263,7 +261,7 @@ public class Chess implements  Observed {
 			}
 
 		}
-		else if(pieces[selected.i][selected.j].toString() == "rei-branco" && pieces[i][j].toString() == "torre-branca"&&
+		else if(!isBlackTurn && pieces[selected.i][selected.j].toString() == "rei-branco" && pieces[i][j].toString() == "torre-branca"&&
 				pieces[selected.i][selected.j].isFirstMove && pieces[i][j].isFirstMove) 
 		{
 			if (i==0 && pieces[i+1][j].toString() =="vazio" && pieces[i+2][j].toString() =="vazio" && pieces[i+3][j].toString() =="vazio") 
@@ -274,8 +272,7 @@ public class Chess implements  Observed {
 				System.out.println("roque branco longo");
 				return true;
 				
-			}
-			if (i==7 && pieces[i-1][j].toString() =="vazio" && pieces[i-2][j].toString() =="vazio")
+			}else if (i==7 && pieces[i-1][j].toString() =="vazio" && pieces[i-2][j].toString() =="vazio")
 			{
 				pieces[i-2][j]=pieces[i][j];
 				pieces[i][j] = new Vago();	

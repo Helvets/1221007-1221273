@@ -26,6 +26,10 @@ public class Controller {
 	public static Observed getObserved() {
 		return observed;
 	}
+	
+	public static Observer getObserver() {
+		return observer;
+	}
 	public void clickAction(int i, int j) {
 		Chess.getChess().click(i, j);
 	}
