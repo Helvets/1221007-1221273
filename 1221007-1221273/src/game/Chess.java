@@ -202,10 +202,10 @@ public class Chess implements  Observed {
 			a.popupShow(x, y);
 		}
 		else if (pieces[selected.i][selected.j].toString() == "peao-branco" && y==0) {//promocao branca
+			System.out.printf("%s\n", pieces[x][y].toString() );
 			a=new Promotion (x, y, Color.white, obs);
 			a.popupShow(x, y);
 		}
-
 		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j sao guardados na chamada da "click"
 		pieces[x][y].isSelected=false;
 		pieces[x][y].isFirstMove=false;
@@ -215,13 +215,17 @@ public class Chess implements  Observed {
 	
 	//executa click
 	public void click(int i, int j) {
+		if(Promotion.flag) { //caso o player nao tenha selecionado do popup menu a promocao
+			ClearSelecction();
+			a.popupShow(i, j);
+		}
 		System.out.printf("[%d][%d] ", i,j);
 		System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
 			if (!selected.someoneIsSelected) { 					//Se ninguem esta¡ selecionado, entra aqui
 				pieces[i][j].isSelected = true; 				//A peca esta¡ selecionada
-				moveList(i, j); 								//movimentos que a peÃ§a pode fazer
-				selected.SelectedUpdate(true, i, j); 			//Atualiza dados da peÃ§a selecionada, agora a peÃ§a selecionada estÃ¡ guardada em selected
+				moveList(i, j); 								//movimentos que a peca pode fazer
+				selected.SelectedUpdate(true, i, j); 			//Atualiza dados da peca selecionada, agora a peÃ§a selecionada esta¡ guardada em selected
 			} 
 			else if (pieces[i][j].isHighlighted) {				//Se clicou onde esta¡ com Highlight (movimento permitido) entra aqui
 				move(i, j);										//Move a peca

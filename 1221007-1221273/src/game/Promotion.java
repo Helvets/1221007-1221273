@@ -26,12 +26,11 @@ public class Promotion {
 	private Observed observed;
 	public JPopupMenu popup;
 	private Piece[][] pieces;
-	private Observer obs;
-	
+	protected static boolean flag;//caso o player nao selecione do popup menu a promocao
 	public Promotion(int i, int j, Color cor, Observer obs) {
+		flag=true;
 		observed = Controller.getObserved();
 		pieces = observed.getPieces();
-		
 	    popup = new JPopupMenu();
 	    ActionListener menuListener = new ActionListener() {
 	      public void actionPerformed(ActionEvent event) {
@@ -39,10 +38,12 @@ public class Promotion {
 	    	else if (event.getActionCommand()=="Torre") pieces[i][j]= new Torre(cor);
 	    	else if (event.getActionCommand()=="Bispo") pieces[i][j]= new Bispo(cor);
 	    	else if (event.getActionCommand()=="Cavalo") pieces[i][j]= new Cavalo(cor);
+	    	flag=false;//o player selecionou do popup menu
 	    	obs.notify(Chess.getChess());
 	        System.out.println("Popup menu item [" + event.getActionCommand() + "] was selected.");
 	      }
-	    };
+	    }
+	    ;
 	    JMenuItem item;
 	    if (cor==Color.black) popup.add(item = new JMenuItem("Dama", new ImageIcon("Pecas/Pecas_1/p_dama.gif")));
 	    else popup.add(item = new JMenuItem("Dama", new ImageIcon("Pecas/Pecas_1/b_dama.gif")));
@@ -61,7 +62,8 @@ public class Promotion {
 	    item.setHorizontalTextPosition(JMenuItem.RIGHT);
 	    item.addActionListener(menuListener);
 	    popup.setLabel("Justification");
-	    popup.setBorder(new BevelBorder(BevelBorder.RAISED));	    
+	    popup.setBorder(new BevelBorder(BevelBorder.RAISED));	
+	    
 	}
 	
 	public void popupShow(int i, int j) {
