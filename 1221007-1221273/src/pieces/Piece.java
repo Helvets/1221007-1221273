@@ -14,7 +14,6 @@ public abstract class Piece {
 	public boolean isHighlighted;
 	public boolean isSelected;
 	public boolean isFirstMove = true;
-	
 	protected Image img_branco;
 	protected Image img_preto;
 	

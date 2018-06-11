@@ -5,9 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import control.Controller;
+
 
 
 public class Rei extends Piece {
+	private static Rei reiPreto = null;
+	private static Rei reiBranco = null;
 	public Rei(Color cor) {
 		this.cor = cor;
 		this.canJump = true;
@@ -23,7 +27,6 @@ public class Rei extends Piece {
 			System.exit(1);
 		}
 	}
-	
 
 	public boolean canMove(int x, int y) {
 		return ((x>=-1 && x<=1 && y>=-1 && y<=1) && !(x == 0 && y == 0));

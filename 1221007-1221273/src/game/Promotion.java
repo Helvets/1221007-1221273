@@ -21,15 +21,23 @@ import pieces.Torre;
 import static window.GameWindow.*;
 
 public class Promotion {
-	
+	private static Promotion promotion = null;
 	JPanel board = (JPanel) Controller.getObserver();
 	private Observed observed;
 	public JPopupMenu popup;
 	private Piece[][] pieces;
 	protected static boolean flag;//caso o player nao selecione do popup menu a promocao
+	protected int x;//caso o player nao selecione do popup menu a promocao
+	protected int y;//caso o player nao selecione do popup menu a promocao
+	
+	public Promotion () {
+		flag=false;
+	}
 	public Promotion(int i, int j, Color cor, Observer obs) {
 		flag=true;
-		observed = Controller.getObserved();
+		x=i;
+		y=j;
+		observed = Controller.getObserved();  // pega o panel board pelo controlador
 		pieces = observed.getPieces();
 	    popup = new JPopupMenu();
 	    ActionListener menuListener = new ActionListener() {
@@ -66,7 +74,8 @@ public class Promotion {
 	    
 	}
 	
-	public void popupShow(int i, int j) {
-		popup.show(board, i*size, j*size);
+	public void popupShow() {
+		popup.show(board, x*size, y*size); //mostra no panel exatamente na casa da promocao
 	}
+	
 }

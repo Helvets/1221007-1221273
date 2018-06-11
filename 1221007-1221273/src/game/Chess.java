@@ -9,9 +9,15 @@ public class Chess implements  Observed {
 	private static Chess chess = null;
 	private Observer obs;
 	public Piece[][] pieces = new Piece[8][8];
+	private Piece[][] piecesbackup = new Piece[8][8];
 	private boolean isBlackTurn;
 	private Selected selected = new Selected();
-	Promotion a;
+	Promotion promotionIstance;
+	private Color colorcheck;
+	protected int reiPretoX=4;
+	protected int reiPretoY=0;
+	protected int reiBrancoX=4;
+	protected int reiBrancoY=7;
 	public Chess() {
 		ChessInitializer();
 	}
@@ -47,8 +53,8 @@ public class Chess implements  Observed {
 			}
 		}
 		//Preenche matriz com as demais pe√ßas
-		pieces[4][0] = new Rei(Color.black);
-		pieces[4][7] = new Rei(Color.white);
+		pieces[4][0] = new Rei(Color.black); 
+		pieces[4][7] = new Rei(Color.white); 
 		pieces[0][0] = new Torre(Color.black);
 		pieces[7][0] = new Torre(Color.black);
 		pieces[0][7] = new Torre(Color.white);
@@ -70,6 +76,7 @@ public class Chess implements  Observed {
 	
 	//Ilumina/destaca movementos validos
 	//usado na implementacao do movimento
+	// x e y sao as posicoes da peca a ser movida
 	private void moveList(int x, int y) {
 		if (isBlackTurn && pieces[x][y].cor == Color.black) {
 			for (int i = 0; i < 8; i++) {
@@ -198,29 +205,54 @@ public class Chess implements  Observed {
 
 	private void move(int x, int y) {
 		if (pieces[selected.i][selected.j].toString() == "peao-preto" && y==7) {//promocao preta
-			a=new Promotion (x, y, Color.black, obs);
-			a.popupShow(x, y);
+			promotionIstance=new Promotion (x, y, Color.black, obs);
+			promotionIstance.popupShow();
 		}
 		else if (pieces[selected.i][selected.j].toString() == "peao-branco" && y==0) {//promocao branca
-			System.out.printf("%s\n", pieces[x][y].toString() );
-			a=new Promotion (x, y, Color.white, obs);
-			a.popupShow(x, y);
+			promotionIstance =new Promotion (x, y, Color.white, obs);
+			promotionIstance .popupShow();
+		}
+		if (pieces[selected.i][selected.j] instanceof Rei) {
+			if (!isBlackTurn) {
+				reiBrancoX=x;
+				reiBrancoY=y;
+				
+			}else {
+				reiPretoX=x;
+				reiPretoY=y;
+			}
 		}
 		pieces[x][y]=pieces[selected.i][selected.j];			//selected.i e j sao guardados na chamada da "click"
 		pieces[x][y].isSelected=false;
 		pieces[x][y].isFirstMove=false;
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
+
+		if (isBlackTurn) {
+			colorcheck=Color.black;
+		}else colorcheck=Color.white;
+		
+		if (isInCheck(colorcheck)){
+			if(colorcheck == Color.black)System.out.printf("check no rei preto \n");
+			else System.out.printf("check no rei branco \n");
+			if (isCheckmate(colorcheck)) {
+				if (isBlackTurn) System.out.printf("Fim de Jogo, Branco Ganhou \n");
+				else System.out.printf("Fim de Jogo, Preto Ganhou \n");
+			}
+		}
+		obs.notify(this);
+
 	}
 	
 	//executa click
 	public void click(int i, int j) {
 		if(Promotion.flag) { //caso o player nao tenha selecionado do popup menu a promocao
 			ClearSelecction();
-			a.popupShow(i, j);
+			promotionIstance.popupShow();
+			return;
 		}
-		System.out.printf("[%d][%d] ", i,j);
-		System.out.printf("%s\n", pieces[i][j].toString() );
+		//System.out.printf("[%d][%d] ", i,j);
+		//System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
 			if (!selected.someoneIsSelected) { 					//Se ninguem esta° selecionado, entra aqui
 				pieces[i][j].isSelected = true; 				//A peca esta° selecionada
@@ -287,4 +319,99 @@ public class Chess implements  Observed {
 		}
 		return false;
 	}
+	
+	public boolean isInCheck(Color cor) {
+		boolean isChecked = false;
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				if(pieces[i][j].cor==Color.white && cor ==Color.black) {
+					if(pieces[i][j].canCapture(i-reiPretoX ,j-reiPretoY) && isTheWayClear(i, j, reiPretoX, reiPretoY)) {
+						isChecked = true;
+						colorcheck=cor;
+						//System.out.printf(" %s is in check \n", Rei.getReiPreto().toString());
+						return isChecked;
+					}
+				} 
+				else if (pieces[i][j].cor==Color.black && cor ==Color.white)  {
+					if(pieces[i][j].canCapture(i-reiBrancoX, j-reiBrancoY) && isTheWayClear(i, j, reiBrancoX, reiBrancoY)) {
+						isChecked = true;
+						//System.out.printf("%s is in check \n", Rei.getReiBranco().toString());
+						colorcheck=cor;
+						return isChecked;
+					}
+				}
+			}
+		}
+		return isChecked;
+	}
+	
+	public boolean isCheckmate(Color cor) {
+		int x=0,y=0;
+		int i=0, j=0;
+		int auxreiBrancoX=reiBrancoX;
+		int auxreiBrancoY=reiBrancoY;
+		int auxreiPretoX=reiPretoX;
+		int auxreiPretoY=reiPretoY;
+		
+		boolean isKingInDanger = true;
+		piecesbackup= copy(pieces);
+		for(i = 0; i < 8; i++) {
+			for(j = 0; j < 8; j++) { //escolhi a peca para tentar tirar check
+				if (pieces[i][j].cor==cor) {
+					ClearSelecction();
+					moveList(i,j);
+					for( x = 0; x < 8; x++) {
+						for( y = 0; y < 8; y++) { //movi a peca para tentar tirar check
+							if (pieces[x][y].isHighlighted) {
+								if (pieces[i][j] instanceof Rei) {
+									if (cor==Color.white) {
+										reiBrancoX=x;
+										reiBrancoY=y;
+										
+									}else {
+										reiPretoX=x;
+										reiPretoY=y;
+									}
+								}
+								pieces[x][y] = pieces[i][j];
+								pieces[i][j]= new Vago();
+							}
+							if (!isInCheck(cor)) {
+								pieces= copy(piecesbackup);
+								ClearSelecction();
+								return false;
+							}
+							pieces[x][y] = piecesbackup[x][y];
+							pieces[i][j]= piecesbackup[i][j];
+							if (pieces[i][j] instanceof Rei) {
+								if (cor==Color.white) {
+									reiBrancoX=auxreiBrancoX;
+									reiBrancoY=auxreiBrancoY;
+									
+								}else {
+									reiPretoX=auxreiPretoX;
+									reiPretoY=auxreiPretoY;
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+		ClearSelecction();
+		pieces= copy(piecesbackup);
+
+		return isKingInDanger;
+	}
+	
+	public Piece[][] copy(Piece[][] old){
+		Piece[][] current= new Piece[8][8];
+		for(int i=0; i<old.length; i++)
+			  for(int j=0; j<old[i].length; j++)
+				  current[i][j]=old[i][j];
+		return current;
+		
+	}
+	
 }
