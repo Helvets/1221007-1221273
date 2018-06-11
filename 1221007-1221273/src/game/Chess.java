@@ -86,11 +86,12 @@ public class Chess implements  Observed {
 					if (isTheWayClear(x,y,i,j)) {
 						if (pieces[x][y].canMove(x-i, y-j) && pieces[i][j].toString()=="vazio" ) {
 							pieces[i][j].isHighlighted= true;
+							CheckRestriction(Color.black, x, y); //remove o destaque se eh uma jogada ilegal pois nao tira cheque
 						}
 						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.white) {
 							pieces[i][j].isHighlighted= true;
+							CheckRestriction(Color.black, x, y); //remove o destaque se eh uma jogada ilegal pois nao tira cheque
 						}
-						if (blackIsCheked) CheckRestriction(Color.black, x, y);  //remove o destaque se eh uma jogada ilegal pois nao tira cheque
 					}	
 				}
 			}
@@ -100,11 +101,12 @@ public class Chess implements  Observed {
 					if (isTheWayClear(x,y,i,j)) {
 						if (pieces[x][y].canMove(x-i, y-j) && pieces[i][j].toString()=="vazio" ) {
 							pieces[i][j].isHighlighted= true;
+							CheckRestriction(Color.white, x, y);//remove o destaque se eh uma jogada ilegal pois nao tira cheque
 						}
 						if (pieces[x][y].canCapture(x-i, y-j) && pieces[i][j].cor == Color.black) {
 							pieces[i][j].isHighlighted= true;
+							CheckRestriction(Color.white, x, y);//remove o destaque se eh uma jogada ilegal pois nao tira cheque
 						}
-						if (whiteIsCheked) CheckRestriction(Color.white, x, y);//remove o destaque se eh uma jogada ilegal pois nao tira cheque
 					}
 				}
 			}
@@ -457,37 +459,37 @@ public class Chess implements  Observed {
 					}
 					pieces[x][y] = pieces[i][j];
 					pieces[i][j]= new Vago();
-				}
-				if (!isInCheck(cor)) {
-					pieces[x][y] = piecesbackup[x][y];
-					pieces[i][j]= piecesbackup[i][j];
-					if (pieces[i][j] instanceof Rei) {
-						if (cor==Color.white) {
-							reiBrancoX=auxreiBrancoX;
-							reiBrancoY=auxreiBrancoY;
+					if (!isInCheck(cor)) {
+						pieces[x][y] = piecesbackup[x][y];
+						pieces[i][j]= piecesbackup[i][j];
+						if (pieces[i][j] instanceof Rei) {
+							if (cor==Color.white) {
+								reiBrancoX=auxreiBrancoX;
+								reiBrancoY=auxreiBrancoY;
 
-						}else {
-							reiPretoX=auxreiPretoX;
-							reiPretoY=auxreiPretoY;
+							}else {
+								reiPretoX=auxreiPretoX;
+								reiPretoY=auxreiPretoY;
+							}
 						}
+						pieces[x][y].isHighlighted=true; //eh uma jogada valida para tirar cheque
 					}
-					pieces[x][y].isHighlighted=true; //eh uma jogada valida para tirar cheque
-				}else {
-					pieces[x][y] = piecesbackup[x][y];
-					pieces[i][j]= piecesbackup[i][j];
-					if (pieces[i][j] instanceof Rei) {
-						if (cor==Color.white) {
-							reiBrancoX=auxreiBrancoX;
-							reiBrancoY=auxreiBrancoY;
+					else {
+						pieces[x][y] = piecesbackup[x][y];
+						pieces[i][j]= piecesbackup[i][j];
+						if (pieces[i][j] instanceof Rei) {
+							if (cor==Color.white) {
+								reiBrancoX=auxreiBrancoX;
+								reiBrancoY=auxreiBrancoY;
 
-						}else {
-							reiPretoX=auxreiPretoX;
-							reiPretoY=auxreiPretoY;
+							}else {
+								reiPretoX=auxreiPretoX;
+								reiPretoY=auxreiPretoY;
+							}
 						}
+						pieces[x][y].isHighlighted=false; //nao eh uma jogada valida para tirar cheque
 					}
-					pieces[x][y].isHighlighted=false; //nao eh uma jogada valida para tirar cheque
-				}
-				
+				}	
 			}
 		}
 	}
