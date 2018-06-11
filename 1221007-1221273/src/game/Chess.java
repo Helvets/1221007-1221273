@@ -364,8 +364,6 @@ public class Chess implements  Observed {
 		int auxreiBrancoY=reiBrancoY;
 		int auxreiPretoX=reiPretoX;
 		int auxreiPretoY=reiPretoY;
-		
-		boolean isKingInDanger = true;
 		piecesbackup= copy(pieces);
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++) { //escolhi a peca para tentar tirar check
@@ -423,7 +421,7 @@ public class Chess implements  Observed {
 
 		}
 		ClearSelecction();
-		return isKingInDanger;
+		return true;
 	}
 	
 	//copia a matriz piece
