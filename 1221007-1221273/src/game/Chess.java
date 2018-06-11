@@ -251,8 +251,8 @@ public class Chess implements  Observed {
 			promotionIstance.popupShow();
 			return;
 		}
-		//System.out.printf("[%d][%d] ", i,j);
-		//System.out.printf("%s\n", pieces[i][j].toString() );
+		System.out.printf("[%d][%d] ", i,j);
+		System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
 			if (!selected.someoneIsSelected) { 					//Se ninguem esta¡ selecionado, entra aqui
 				pieces[i][j].isSelected = true; 				//A peca esta¡ selecionada
