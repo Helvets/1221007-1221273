@@ -377,6 +377,18 @@ public class Chess implements  Observed {
 								pieces[i][j]= new Vago();
 							}
 							if (!isInCheck(cor)) {
+								pieces[x][y] = piecesbackup[x][y];
+								pieces[i][j]= piecesbackup[i][j];
+								if (pieces[i][j] instanceof Rei) {
+									if (cor==Color.white) {
+										reiBrancoX=auxreiBrancoX;
+										reiBrancoY=auxreiBrancoY;
+										
+									}else {
+										reiPretoX=auxreiPretoX;
+										reiPretoY=auxreiPretoY;
+									}
+								}
 								pieces= copy(piecesbackup);
 								ClearSelecction();
 								return false;
