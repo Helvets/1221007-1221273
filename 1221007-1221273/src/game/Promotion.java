@@ -53,20 +53,20 @@ public class Promotion {
 	    }
 	    ;
 	    JMenuItem item;
-	    if (cor==Color.black) popup.add(item = new JMenuItem("Dama", new ImageIcon("Pecas/Pecas_1/p_dama.gif")));
-	    else popup.add(item = new JMenuItem("Dama", new ImageIcon("Pecas/Pecas_1/b_dama.gif")));
+	    if (cor==Color.black) popup.add(item = new JMenuItem("Dama", new ImageIcon("Pecas/Pecas_2/PurpleQ.png")));
+	    else popup.add(item = new JMenuItem("Dama", new ImageIcon("Pecas/Pecas_2/CyanQ.png")));
 	    item.setHorizontalTextPosition(JMenuItem.RIGHT);
 	    item.addActionListener(menuListener);
-	    if (cor==Color.black) popup.add(item = new JMenuItem("Torre", new ImageIcon("Pecas/Pecas_1/p_torre.gif")));
-	    else popup.add(item = new JMenuItem("Torre", new ImageIcon("Pecas/Pecas_1/b_torre.gif")));
+	    if (cor==Color.black) popup.add(item = new JMenuItem("Torre", new ImageIcon("Pecas/Pecas_2/PurpleR.png")));
+	    else popup.add(item = new JMenuItem("Torre", new ImageIcon("Pecas/Pecas_2/CyanR.png")));
 	    item.setHorizontalTextPosition(JMenuItem.RIGHT);
 	    item.addActionListener(menuListener);
-	    if (cor==Color.black) popup.add(item = new JMenuItem("Cavalo", new ImageIcon("Pecas/Pecas_1/p_Cavalo.gif")));
-	    else popup.add(item = new JMenuItem("Cavalo", new ImageIcon("Pecas/Pecas_1/b_Cavalo.gif")));
+	    if (cor==Color.black) popup.add(item = new JMenuItem("Cavalo", new ImageIcon("Pecas/Pecas_2/PurpleN.png")));
+	    else popup.add(item = new JMenuItem("Cavalo", new ImageIcon("Pecas/Pecas_2/CyanN.png")));
 	    item.setHorizontalTextPosition(JMenuItem.RIGHT);
 	    item.addActionListener(menuListener);
-	    if (cor==Color.black) popup.add(item = new JMenuItem("Bispo", new ImageIcon("Pecas/Pecas_1/p_Bispo.gif")));
-	    else popup.add(item = new JMenuItem("Bispo", new ImageIcon("Pecas/Pecas_1/b_Bispo.gif")));
+	    if (cor==Color.black) popup.add(item = new JMenuItem("Bispo", new ImageIcon("Pecas/Pecas_2/PurpleB.png")));
+	    else popup.add(item = new JMenuItem("Bispo", new ImageIcon("Pecas/Pecas_2/CyanB.png")));
 	    item.setHorizontalTextPosition(JMenuItem.RIGHT);
 	    item.addActionListener(menuListener);
 	    popup.setLabel("Justification");

@@ -15,8 +15,8 @@ public class Torre extends Piece{
 		this.isHighlighted = false;
 		this.isSelected = false;
 		try {
-			if (this.cor == Color.white) img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_torre.gif"));
-			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_torre.gif"));
+			if (this.cor == Color.white) img_branco = ImageIO.read(new File("Pecas/Pecas_2/CyanR.png"));
+			else img_preto = ImageIO.read(new File("Pecas/Pecas_2/PurpleR.png"));
 
 		}catch(IOException e) {
 			System.out.println(e.getMessage());

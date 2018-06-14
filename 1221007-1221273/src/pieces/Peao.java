@@ -15,8 +15,8 @@ public class Peao extends Piece{
 		this.isSelected= false;
 		
 		try {
-			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_peao.gif"));
-			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_peao.gif"));
+			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_2/CyanP.png"));
+			else img_preto = ImageIO.read(new File("Pecas/Pecas_2/PurpleP.png"));
 
 		}catch(IOException e) {
 			System.out.println(e.getMessage());

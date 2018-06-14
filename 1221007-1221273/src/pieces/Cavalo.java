@@ -15,8 +15,8 @@ public class Cavalo extends Piece{
 		this.isSelected = false;
 
 		try {
-			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_cavalo.gif"));
-			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_cavalo.gif"));
+			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_2/CyanN.png"));
+			else img_preto = ImageIO.read(new File("Pecas/Pecas_2/PurpleN.png"));
 
 		}catch(IOException e) {
 			System.out.println(e.getMessage());

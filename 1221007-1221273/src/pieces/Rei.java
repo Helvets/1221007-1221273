@@ -18,8 +18,8 @@ public class Rei extends Piece {
 		this.isHighlighted = false;
 		this.isSelected = false;
 		try {
-			if (this.cor == Color.white) img_branco = ImageIO.read(new File("Pecas/Pecas_1/b_rei.gif"));
-			else img_preto = ImageIO.read(new File("Pecas/Pecas_1/p_rei.gif"));
+			if (this.cor == Color.white) img_branco = ImageIO.read(new File("Pecas/Pecas_2/CyanK.png"));
+			else img_preto = ImageIO.read(new File("Pecas/Pecas_2/PurpleK.png"));
 
 			
 		}catch(IOException e) {
