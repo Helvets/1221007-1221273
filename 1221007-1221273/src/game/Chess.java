@@ -2,6 +2,8 @@ package game;
 
 import control.*;
 import pieces.*;
+import sun.awt.RepaintArea;
+
 import java.awt.*;
 
 import javax.swing.JOptionPane;
@@ -13,6 +15,7 @@ public class Chess implements  Observed {
 	public Piece[][] pieces = new Piece[8][8];
 	private Piece[][] piecesbackup = new Piece[8][8];
 	private boolean isBlackTurn;
+
 	private Selected selected = new Selected();
 	Promotion promotionIstance;
 	private Color colorcheck;
@@ -33,6 +36,14 @@ public class Chess implements  Observed {
 	}
 	public Piece[][] getPieces() {
 		return this.pieces;
+	}
+	
+	public boolean isBlackTurn() {
+		return isBlackTurn;
+	}
+
+	public void setBlackTurn(boolean isBlackTurn) {
+		this.isBlackTurn = isBlackTurn;
 	}
 	
 	public void add(Observer o) {
@@ -513,6 +524,11 @@ public class Chess implements  Observed {
 				}	
 			}
 		}
+	}
+
+	// carrega jogo existente
+	public void loadGame(Piece[][] loadedPieces) {
+		pieces = loadedPieces;
 	}
 	
 }
