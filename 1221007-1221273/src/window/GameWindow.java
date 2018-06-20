@@ -1,12 +1,23 @@
 package window;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import control.Controller;
+import game.Chess;
+import pieces.Bispo;
+import pieces.Cavalo;
+import pieces.Dama;
+import pieces.Peao;
+import pieces.Piece;
+import pieces.Rei;
+import pieces.Torre;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.io.*;
 
 public class GameWindow extends JFrame implements MouseListener{
 	public static final int size = 100;
@@ -37,12 +48,110 @@ public class GameWindow extends JFrame implements MouseListener{
 
 	public void mouseClicked(MouseEvent e) {
 
-		int selectedSquareX = (e.getX() - 8) / size;
-		int selectedSquareY = (e.getY() - 30) / size;
-		//System.out.printf("[%d]", selectedSquareX);
-		//System.out.printf("[%d] ", selectedSquareY);
-		controller.clickAction(selectedSquareX,selectedSquareY);
+		if(SwingUtilities.isLeftMouseButton(e))
+		{
+			int selectedSquareX = (e.getX() - 8) / size;
+			int selectedSquareY = (e.getY() - 30) / size;
+			//System.out.printf("[%d]", selectedSquareX);
+			//System.out.printf("[%d] ", selectedSquareY);
+			controller.clickAction(selectedSquareX,selectedSquareY);
+		}
+		else if (SwingUtilities.isRightMouseButton(e))
+		{
+			System.out.println("clicou botao direito");
+			
+			JFileChooser save = new JFileChooser();
+			
+			//Cria um filtro para arquivos txt
+			FileFilter filter = new FileNameExtensionFilter("Txt file (*.txt)", "txt");
+			
+			//forca o salvamento em txt como unica opcao
+			save.addChoosableFileFilter(filter);
+			save.setFileFilter(filter);
+			
+			int botao_clicado = save.showSaveDialog(this);
+			
+			if(botao_clicado == JFileChooser.APPROVE_OPTION)
+			{
+				try {
+				FileWriter fw = new FileWriter(save.getSelectedFile()+".txt");
+				
+				String saveData = "";
+				Piece[][] pecas = Chess.getChess().getPieces();
+				
+
+				//faz uma matriz com as posições do tabuleiro
+				for(int i = 0; i < pecas.length; i++) {
+					for(int j = 0; j < pecas[i].length; j++) {
+						
+						//Comparador Ternário para definir preto ou branco
+						//A cor da peça é preta? Se sim, valor = "p", caso não, verifica se é verde. É? Então "v" se não, valor = "b"
+						String cor = pecas[j][i].getCor() == Color.black ? "p" : pecas[j][i].getCor() == Color.green ? "v" : "b";
+						
+						saveData += cor + "_";
+						
+						if (pecas[j][i] instanceof Rei) {
+							//Rei rei = (Rei) pecas[i][j] ;
+							//System.out.println(rei.toString());
+							
+							saveData += "r";
+							
+						}
+						
+						else if (pecas[j][i] instanceof Dama) {
+							
+							saveData += "d";
+						}
+						
+						else if (pecas[j][i] instanceof Bispo) {
+							
+							saveData += "b";
+						}
+						
+						else if (pecas[j][i] instanceof Cavalo) {
+							
+							saveData += "c";
+						}
+						
+						else if (pecas[j][i] instanceof Peao) {
+							
+							saveData += "p";
+						}
+						
+						else if (pecas[j][i] instanceof Torre) {
+							
+							saveData += "t";
+						}
+						
+						else {
+							saveData += "v";
+						}
+
+						// Se não é o ultimo elemento da linha, coloca ","
+						if(!(j == pecas[i].length - 1))
+							saveData += ","; 
+					}
+					saveData += "\r\n"; // quebra de linha
+				}
+				
+				//System.out.println(saveData.toString());				
+	            fw.write(saveData);
+	            fw.close();
+				}
+				catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				
+				File file = save.getSelectedFile();
+				String fileName = file.getAbsolutePath();
+			}
+			
+			if(botao_clicado == JFileChooser.CANCEL_OPTION) {
+				return;
+			}
+		}
 	}
+		
 
 	public void mousePressed(MouseEvent e) {
 
