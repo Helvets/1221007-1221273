@@ -16,7 +16,13 @@ public abstract class Piece {
 	public boolean isFirstMove = true;
 	protected Image img_branco;
 	protected Image img_preto;
-	
+	/**
+	 * 
+	 * @param g
+	 * @param positionX
+	 * @param positionY
+	 * @param squareWidth
+	 */
 	public void drawYourself(Graphics g, int positionX, int positionY, int squareWidth) {
 		if (this.cor == Color.black) {
 			g.drawImage(img_preto, positionX, positionY, squareWidth, squareWidth, null);
@@ -36,6 +42,13 @@ public abstract class Piece {
 		}
 				
 	}
+	
+	public Color getCor() {
+		return cor;
+	}
+
+
+
 	public abstract boolean canMove(int x, int y);
 	public abstract boolean canCapture(int x, int y);
 }
