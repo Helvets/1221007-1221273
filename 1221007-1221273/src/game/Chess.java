@@ -4,6 +4,8 @@ import control.*;
 import pieces.*;
 import java.awt.*;
 
+import javax.swing.JOptionPane;
+
 public class Chess implements  Observed {
 	
 	private static Chess chess = null;
@@ -20,7 +22,7 @@ public class Chess implements  Observed {
 	protected int reiBrancoY=7;
 	protected boolean blackIsCheked=false;
 	protected boolean whiteIsCheked=false;
-	public Chess() {
+	public Chess() { //talvez botar protected ou private pro ivan nao reclamar, pra nao ser instanciado mais de uma vez (padrão singleton)
 		ChessInitializer();
 	}
 	
@@ -47,14 +49,14 @@ public class Chess implements  Observed {
 			for (int j = 0; j < 8; j++) {
 				if (j == 1) { //Preenche todos peos pretos na matriz de peoas
 					pieces[i][j] = new Peao(Color.black);
-				} else if (j == 6) { //Preenche todos peões brancos na matriz de peoas
+				} else if (j == 6) { //Preenche todos peÃµes brancos na matriz de peoas
 					pieces[i][j] = new Peao(Color.white);
 				} else {
 					pieces[i][j] = new Vago();
 				}
 			}
 		}
-		//Preenche matriz com as demais peças
+		//Preenche matriz com as demais peÃ§as
 		pieces[4][0] = new Rei(Color.black); 
 		pieces[4][7] = new Rei(Color.white); 
 		pieces[0][0] = new Torre(Color.black);
@@ -247,8 +249,29 @@ public class Chess implements  Observed {
 				System.out.printf("check no rei branco \n");
 			}
 			if (isCheckmate(colorcheck)) {
-				if (isBlackTurn) System.out.printf("Fim de Jogo, Branco Ganhou \n");
-				else System.out.printf("Fim de Jogo, Preto Ganhou \n");
+				
+				String end_text;
+	
+				
+				if (isBlackTurn) 
+				{
+					end_text = "Fim de Jogo, Branco Ganhou";
+				}
+					
+					//System.out.printf("Fim de Jogo, Branco Ganhou \n");
+				else {
+					
+					end_text = "Fim de Jogo, Preto Ganhou";
+					//System.out.printf("Fim de Jogo, Preto Ganhou \n");
+				}
+
+				// mostra um painel JOptionPane usando showMessageDialog
+				JOptionPane.showMessageDialog(null,
+						 end_text,
+						     "Mensagem de Game Over",
+						     JOptionPane.INFORMATION_MESSAGE); //information_message = define o tipo do popup
+				
+				ChessInitializer();
 			}
 		} else {
 			if (isBlackTurn) blackIsCheked=false;
@@ -268,12 +291,12 @@ public class Chess implements  Observed {
 		System.out.printf("[%d][%d] ", i,j);
 		System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
-			if (!selected.someoneIsSelected) { 					//Se ninguem esta� selecionado, entra aqui
-				pieces[i][j].isSelected = true; 				//A peca esta� selecionada
+			if (!selected.someoneIsSelected) { 					//Se ninguem esta¡ selecionado, entra aqui
+				pieces[i][j].isSelected = true; 				//A peca esta¡ selecionada
 				moveList(i, j); 								//movimentos que a peca pode fazer
-				selected.SelectedUpdate(true, i, j); 			//Atualiza dados da peca selecionada, agora a peça selecionada esta� guardada em selected
+				selected.SelectedUpdate(true, i, j); 			//Atualiza dados da peca selecionada, agora a peÃ§a selecionada esta¡ guardada em selected
 			} 
-			else if (pieces[i][j].isHighlighted) {				//Se clicou onde esta� com Highlight (movimento permitido) entra aqui
+			else if (pieces[i][j].isHighlighted) {				//Se clicou onde esta¡ com Highlight (movimento permitido) entra aqui
 				move(i, j);										//Move a peca
 				ClearSelecction();
 				selected.someoneIsSelected = false;
