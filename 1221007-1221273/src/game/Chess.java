@@ -300,6 +300,7 @@ public class Chess implements  Observed {
 			
 			ChessInitializer();
 		}
+		obs.notify(this);
 	}
 	
 	//executa click
