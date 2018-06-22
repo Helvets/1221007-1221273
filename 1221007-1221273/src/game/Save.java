@@ -119,26 +119,12 @@ public class Save {
 			return;
 		}
 	}
-		
 	
-
-public static void initGame() {
-	GameWindow w= new GameWindow(Controller.getController());
-	w.setTitle("Xadrez");
-	w.setVisible(true);
-	w.setLayout(null);
-}
-
-// initializes a new game
-public void newGameAction() {
-	initGame();
-}
-
-// loads a saved game
-public static void loadGameAction(File savedGame) {
-	Chess.getChess().loadGame(parsePieces(savedGame));
-	initGame();
-}
+	
+	// loads a saved game
+	public static void loadGameAction(File savedGame) {
+		Chess.getChess().loadGame(parsePieces(savedGame));
+	}
 
 // le arquivo texto com jogo existente
 private static Piece[][] parsePieces(File savedGame) {

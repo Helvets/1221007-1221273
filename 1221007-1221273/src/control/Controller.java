@@ -42,8 +42,6 @@ public class Controller {
 	}
 	public void load(File savedGame) {
 		Save.loadGameAction(savedGame);
-	}
-	public void newGame() {
-		Save.initGame();
+		
 	}
 }

@@ -13,6 +13,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import control.Controller;
+import game.Chess;
 
 public class Menu extends JFrame {
 	
@@ -33,7 +34,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				controller.newGame();
+				initGame();
 			}
 		});
 		
@@ -54,6 +55,7 @@ public class Menu extends JFrame {
 			    if (returnValue == JFileChooser.APPROVE_OPTION) {
 			      File selectedFile = loadChooser.getSelectedFile();
 				  controller.load(selectedFile);
+				  initGame();
 				  dispose();
 			    }
 			}
@@ -74,16 +76,11 @@ public class Menu extends JFrame {
 		this.setVisible(false);
 	}
 	
-	public void initGame() {
+	public static void initGame() {
 		GameWindow w= new GameWindow(Controller.getController());
 		w.setTitle("Xadrez");
 		w.setVisible(true);
 		w.setLayout(null);
-	}
-
-	// initializes a new game
-	public void newGameAction() {
-		initGame();
 	}
 	
 }
