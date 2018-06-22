@@ -175,6 +175,9 @@ private static Piece[][] parsePieces(File savedGame) {
                 		break;
                 	case "p": // peao
                 		loadedPieces[j][i] = new Peao(cor);
+                		if ((cor==Color.black && i!=1) || (cor==Color.white && i!=6)) {
+                			loadedPieces[j][i].isFirstMove=false;
+                		}
                 		break;
                 	default:
                 		loadedPieces[j][i] = new Vago();                 		//vago

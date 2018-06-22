@@ -11,7 +11,7 @@ public abstract class Piece {
 	public Color cor;
 	public boolean isHighlighted;
 	public boolean isSelected;
-	public boolean isFirstMove = true;
+	public boolean isFirstMove;
 	protected Image img_branco;
 	protected Image img_preto;
 	
