@@ -41,8 +41,6 @@ public class GameWindow extends JFrame implements MouseListener{
 		{
 			int selectedSquareX = (e.getX() - 8) / size;
 			int selectedSquareY = (e.getY() - 30) / size;
-			//System.out.printf("[%d]", selectedSquareX);
-			//System.out.printf("[%d] ", selectedSquareY);
 			controller.clickAction(selectedSquareX,selectedSquareY);
 		}
 		else if (SwingUtilities.isRightMouseButton(e))

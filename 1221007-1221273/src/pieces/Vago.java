@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-
 public class Vago extends Piece {
 	public Vago() {
 		this.cor = Color.green;
@@ -26,7 +25,6 @@ public class Vago extends Piece {
 	public boolean canMove(int x, int y) {
 		return false;
 	}
-
 
 	public boolean canCapture(int x, int y) {
 		return false;

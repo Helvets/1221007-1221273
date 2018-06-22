@@ -33,7 +33,7 @@ public class Menu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				controller.newGameAction();
+				controller.newGame();
 			}
 		});
 		
@@ -53,7 +53,7 @@ public class Menu extends JFrame {
 			    int returnValue = loadChooser.showOpenDialog(null);
 			    if (returnValue == JFileChooser.APPROVE_OPTION) {
 			      File selectedFile = loadChooser.getSelectedFile();
-				  controller.loadGameAction(selectedFile);
+				  controller.load(selectedFile);
 				  dispose();
 			    }
 			}
@@ -72,6 +72,18 @@ public class Menu extends JFrame {
 	public void dispose() {
 		this.setFocusable(false);
 		this.setVisible(false);
+	}
+	
+	public void initGame() {
+		GameWindow w= new GameWindow(Controller.getController());
+		w.setTitle("Xadrez");
+		w.setVisible(true);
+		w.setLayout(null);
+	}
+
+	// initializes a new game
+	public void newGameAction() {
+		initGame();
 	}
 	
 }

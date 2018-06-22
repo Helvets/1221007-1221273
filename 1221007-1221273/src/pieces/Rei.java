@@ -5,10 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-import control.Controller;
-
-
-
 public class Rei extends Piece {
 	private static Rei reiPreto = null;
 	private static Rei reiBranco = null;

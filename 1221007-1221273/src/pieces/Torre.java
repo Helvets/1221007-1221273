@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-
-
 public class Torre extends Piece{
 	
 	public Torre(Color cor) {

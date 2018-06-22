@@ -1,8 +1,3 @@
-
-import javax.swing.JFrame;
-
-import control.Controller;
-import window.GameWindow;
 import window.Menu;
 
 public class main {

@@ -2,8 +2,6 @@ package game;
 
 import control.*;
 import pieces.*;
-import sun.awt.RepaintArea;
-
 import java.awt.*;
 
 import javax.swing.JOptionPane;
