@@ -14,7 +14,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import control.Controller;
 import pieces.Bispo;
 import pieces.Cavalo;
 import pieces.Dama;
@@ -23,9 +22,13 @@ import pieces.Piece;
 import pieces.Rei;
 import pieces.Torre;
 import pieces.Vago;
-import window.GameWindow;
+import game.Chess;
 
 public class Save {
+	private static int reiPretoX;
+	private static int reiPretoY;
+	private static int reiBrancoX;
+	private static int reiBrancoY;
 	public Save() {
 		JFileChooser save = new JFileChooser();
 		
@@ -42,9 +45,9 @@ public class Save {
 		{
 			try {
 			FileWriter fw = new FileWriter(save.getSelectedFile()+".txt");
-			
+			Chess istanceOfChess=Chess.getChess();
 			String saveData = "";
-			Piece[][] pecas = Chess.getChess().getPieces();
+			Piece[][] pecas = istanceOfChess.getPieces();
 			
 
 			//faz uma matriz com as posições do tabuleiro
@@ -58,41 +61,29 @@ public class Save {
 					saveData += cor + "_";
 					
 					if (pecas[j][i] instanceof Rei) {
-						//Rei rei = (Rei) pecas[i][j] ;
-						//System.out.println(rei.toString());
-						
 						saveData += "r";
-						
 					}
-					
 					else if (pecas[j][i] instanceof Dama) {
-						
 						saveData += "d";
 					}
-					
 					else if (pecas[j][i] instanceof Bispo) {
-						
 						saveData += "b";
 					}
-					
 					else if (pecas[j][i] instanceof Cavalo) {
-						
 						saveData += "c";
 					}
-					
 					else if (pecas[j][i] instanceof Peao) {
-						
 						saveData += "p";
 					}
-					
 					else if (pecas[j][i] instanceof Torre) {
-						
 						saveData += "t";
 					}
-					
 					else {
 						saveData += "v";
 					}
+					if (pecas[j][i].isFirstMove) {
+						saveData+="_" + "y";
+					}else saveData+="_" + "n";
 
 					// Se não é o ultimo elemento da linha, coloca ","
 					if(!(j == pecas[i].length - 1))
@@ -102,8 +93,7 @@ public class Save {
 			}
 			
 			//salva de quem e a vez
-			saveData += Chess.getChess().isBlackTurn() ? "p" : "b";			
-			
+			saveData += Chess.getChess().isBlackTurn() ? "p" : "b";	
 	        fw.write(saveData);
 	        fw.close();
 			}
@@ -123,7 +113,11 @@ public class Save {
 	
 	// loads a saved game
 	public static void loadGameAction(File savedGame) {
-		Chess.getChess().loadGame(parsePieces(savedGame));
+		Chess.getChess().pieces =parsePieces(savedGame);
+		Chess.getChess().reiPretoX=reiPretoX;
+		Chess.getChess().reiPretoY=reiPretoY;
+		Chess.getChess().reiBrancoX=reiBrancoX;
+		Chess.getChess().reiBrancoY=reiBrancoY;
 	}
 
 // le arquivo texto com jogo existente
@@ -160,27 +154,43 @@ private static Piece[][] parsePieces(File savedGame) {
                 switch (tipo) {
                 	case "b": // bispo
                 		loadedPieces[j][i] = new Bispo(cor);
+                		if (pData[2].equals("n"))
+                			loadedPieces[j][i].isFirstMove = false;
                 		break;
                 	case "t": // torre
                 		loadedPieces[j][i] = new Torre(cor);
+                		if (pData[2].equals("n"))
+                			loadedPieces[j][i].isFirstMove = false;
                 		break;
                 	case "d": // dama
                 		loadedPieces[j][i] = new Dama(cor);
+                		if (pData[2].equals("n"))
+                			loadedPieces[j][i].isFirstMove = false;
                 		break;
                 	case "r": // rei
                 		loadedPieces[j][i] = new Rei(cor);
+                		if (cor==Color.black) {
+                    		reiPretoX=j;
+                    		reiPretoY=i;
+                		}else {
+                    		reiBrancoX=j;
+                    		reiBrancoY=i;
+                		}
+                		if (pData[2].equals("n"))
+                			loadedPieces[j][i].isFirstMove = false;
                 		break;
                 	case "c": // cavalo
                 		loadedPieces[j][i] = new Cavalo(cor);
+                		if (pData[2].equals("n"))
+                			loadedPieces[j][i].isFirstMove = false;
                 		break;
                 	case "p": // peao
                 		loadedPieces[j][i] = new Peao(cor);
-                		if ((cor==Color.black && i!=1) || (cor==Color.white && i!=6)) {
-                			loadedPieces[j][i].isFirstMove=false;
-                		}
+                		if (pData[2].equals("n"))
+                			loadedPieces[j][i].isFirstMove = false;
                 		break;
                 	default:
-                		loadedPieces[j][i] = new Vago();                 		//vago
+                		loadedPieces[j][i] = new Vago(); //vago
                 		break;
                 }
             }

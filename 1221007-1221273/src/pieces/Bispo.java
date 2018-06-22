@@ -13,7 +13,7 @@ public class Bispo extends Piece{
 		this.canJump = false;
 		this.isHighlighted = false;
 		this.isSelected = false;
-		
+		this.isFirstMove=true;
 		//Tratamento de Exceção
 		try {
 			if (this.cor == Color.white)img_branco = ImageIO.read(new File("Pecas/Pecas_2/CyanB.png"));

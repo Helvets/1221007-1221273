@@ -23,6 +23,7 @@ public class Chess implements  Observed {
 	protected int reiBrancoY=7;
 	protected boolean blackIsCheked=false;
 	protected boolean whiteIsCheked=false;
+	protected boolean stalemate=false;
 	public Chess() { //talvez botar protected ou private pro ivan nao reclamar, pra nao ser instanciado mais de uma vez (padrão singleton)
 		ChessInitializer();
 	}
@@ -221,6 +222,7 @@ public class Chess implements  Observed {
 	}
 
 	private void move(int x, int y) {
+		
 		if (pieces[selected.i][selected.j].toString() == "peao-preto" && y==7) {//promocao preta
 			promotionIstance=new Promotion (x, y, Color.black, obs);
 			promotionIstance.popupShow();
@@ -244,7 +246,8 @@ public class Chess implements  Observed {
 		pieces[x][y].isFirstMove=false;
 		pieces[selected.i][selected.j]= new Vago();
 		isBlackTurn= !isBlackTurn;
-
+		obs.notify(this);
+		
 		if (isBlackTurn) colorcheck=Color.black;
 		else colorcheck=Color.white;
 		
@@ -286,8 +289,17 @@ public class Chess implements  Observed {
 			if (isBlackTurn) blackIsCheked=false;
 			else whiteIsCheked=false;
 		}
-		obs.notify(this);
-
+		if (stalemate(colorcheck)){
+			String end_text;
+				end_text = "Empate, Stalemate";
+			// mostra um painel JOptionPane usando showMessageDialog
+			JOptionPane.showMessageDialog(null,
+					 end_text,
+					     "Mensagem de Game Over",
+					     JOptionPane.INFORMATION_MESSAGE); //information_message = define o tipo do popup
+			
+			ChessInitializer();
+		}
 	}
 	
 	//executa click
@@ -524,9 +536,22 @@ public class Chess implements  Observed {
 		}
 	}
 
-	// carrega jogo existente
-	public void loadGame(Piece[][] loadedPieces) {
-		pieces = loadedPieces;
+	public boolean stalemate(Color cor) {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) { //escolhi a peca para tentar verificar stalemate
+				if (pieces[i][j].cor==cor) {
+					ClearSelecction();
+					moveList(i,j);
+					for(int x = 0; x < 8; x++) {
+						for(int y = 0; y < 8; y++) {
+							if (pieces[x][y].isHighlighted)  //existe said pois um area esta destacada
+								return false; //nao esta em stalemate
+						}
+					}
+				}
+			}
+		}
+		return true; //situacao de stalemate
 	}
 	
 }
