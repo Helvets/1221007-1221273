@@ -93,7 +93,13 @@ public class Save {
 			}
 			
 			//salva de quem e a vez
-			saveData += Chess.getChess().isBlackTurn() ? "p" : "b";	
+			saveData += Chess.getChess().isBlackTurn() ? "p" : "b";
+			saveData += ","; 
+			if (Chess.getChess().blackIsCheked) saveData +="y";
+			else saveData +="n";
+			saveData += ",";
+			if (Chess.getChess().whiteIsCheked) saveData +="y";
+			else saveData +="n";
 	        fw.write(saveData);
 	        fw.close();
 			}
@@ -200,12 +206,21 @@ private static Piece[][] parsePieces(File savedGame) {
         System.err.println("Could not read file");
         e.printStackTrace();
     }
-
+    String[] var = line.split(",");
     // seta a vez
-    if (line.equals("p"))
-    	Chess.getChess().setBlackTurn(true);
+    if (var[0].equals("p"))
+    	Chess.getChess().isBlackTurn = true;
     else
-    	Chess.getChess().setBlackTurn(false);
+    	Chess.getChess().isBlackTurn = false;
+    if (var[1].equals("y"))
+    	Chess.getChess().blackIsCheked =true;
+    else
+    	Chess.getChess().blackIsCheked=false;
+    if (var[2].equals("y"))
+    	Chess.getChess().whiteIsCheked =true;
+    else
+    	Chess.getChess().whiteIsCheked=false;
+    
     
 	return loadedPieces;
 }

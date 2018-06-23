@@ -1,0 +1,9 @@
+p_t_y,p_c_y,p_b_y,p_d_y,p_r_y,p_b_y,p_c_y,p_t_y
+p_p_y,p_p_y,p_p_y,p_p_y,v_v_n,p_p_y,p_p_y,p_p_y
+v_v_n,v_v_n,v_v_n,v_v_n,v_v_n,v_v_n,v_v_n,v_v_n
+v_v_n,v_v_n,v_v_n,v_v_n,p_p_n,v_v_n,v_v_n,v_v_n
+v_v_n,v_v_n,v_v_n,v_v_n,v_v_n,b_p_n,v_v_n,v_v_n
+v_v_n,v_v_n,v_v_n,v_v_n,v_v_n,b_c_n,v_v_n,v_v_n
+b_p_y,b_p_y,b_p_y,b_p_y,b_p_y,v_v_n,b_p_y,b_p_y
+b_t_y,b_c_y,b_b_y,b_d_y,b_r_y,b_b_y,v_v_n,b_t_y
+p,n,n

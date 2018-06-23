@@ -12,7 +12,7 @@ public class Chess implements  Observed {
 	private Observer obs;
 	public Piece[][] pieces = new Piece[8][8];
 	private Piece[][] piecesbackup = new Piece[8][8];
-	private boolean isBlackTurn;
+	protected boolean isBlackTurn;
 
 	private Selected selected = new Selected();
 	Promotion promotionIstance;
@@ -39,10 +39,6 @@ public class Chess implements  Observed {
 	
 	public boolean isBlackTurn() {
 		return isBlackTurn;
-	}
-
-	public void setBlackTurn(boolean isBlackTurn) {
-		this.isBlackTurn = isBlackTurn;
 	}
 	
 	public void add(Observer o) {
@@ -310,8 +306,8 @@ public class Chess implements  Observed {
 			promotionIstance.popupShow();
 			return;
 		}
-		System.out.printf("[%d][%d] ", i,j);
-		System.out.printf("%s\n", pieces[i][j].toString() );
+		//System.out.printf("[%d][%d] ", i,j);
+		//System.out.printf("%s\n", pieces[i][j].toString() );
 		if (i >= 0 && j >= 0 && i < 8 && j < 8) {
 			if (!selected.someoneIsSelected) { 					//Se ninguem esta¡ selecionado, entra aqui
 				pieces[i][j].isSelected = true; 				//A peca esta¡ selecionada
@@ -338,19 +334,52 @@ public class Chess implements  Observed {
 	
 	public boolean roque(int i, int j) 
 	{
+		if (isBlackTurn) {
+			if(blackIsCheked) {
+				System.out.println("O rei preto esta em xeque");
+				return false;
+			}
+		}else if (whiteIsCheked) {
+			System.out.println("O rei branco esta em xeque");
+			return false;
+		}
+
 		if (isBlackTurn && pieces[selected.i][selected.j].toString() == "rei-preto" && pieces[i][j].toString() == "torre-preta" &&
 				pieces[selected.i][selected.j].isFirstMove && pieces[i][j].isFirstMove)
 		{
+			
 			if (i==0 && pieces[i+1][j].toString() =="vazio" && pieces[i+2][j].toString() =="vazio" && pieces[i+3][j].toString() =="vazio") {
 				pieces[i+3][j]=pieces[i][j];
 				pieces[i][j] = new Vago();	
 				move(i+2,j);
+				if (isInCheck(Color.black)) {
+					pieces[i][j]=pieces[i+3][j];
+					pieces[i+3][j] = new Vago();
+					pieces[i+2][j] = new Vago();
+					pieces[selected.i][selected.j]=new Rei(Color.black);
+					isBlackTurn=true;
+					reiPretoX=4;
+					reiPretoY=0;
+					System.out.println("nao pode fazer roque pois colocaria rei preto em xeque");
+					return false;
+				}
 				System.out.println("roque preto longo");
 				return true;
 			}else if (i==7 && pieces[i-1][j].toString() =="vazio" && pieces[i-2][j].toString() =="vazio") {
 				pieces[i-2][j]=pieces[i][j];
 				pieces[i][j] = new Vago();	
 				move(i-1,j);
+				if (isInCheck(Color.black)) {
+					pieces[i][j]=pieces[i-2][j];
+					pieces[i-2][j]= new Vago();	
+					pieces[i-1][j] = new Vago();
+					pieces[selected.i][selected.j]=new Rei(Color.black);
+					isBlackTurn=true;
+					reiPretoX=4;
+					reiPretoY=0;
+					System.out.println("nao pode fazer roque pois colocaria rei preto em xeque");
+					return false;
+				}
 				System.out.println("roque Preto curto");
 				return true;
 			}
@@ -364,6 +393,17 @@ public class Chess implements  Observed {
 				pieces[i+3][j]=pieces[i][j];
 				pieces[i][j] = new Vago();	
 				move(i+2,j);
+				if (isInCheck(Color.white)) {
+					pieces[i][j]=pieces[i+3][j];
+					pieces[i+3][j]= new Vago();	
+					pieces[i+2][j] = new Vago();
+					pieces[selected.i][selected.j]=new Rei(Color.white);
+					isBlackTurn=false;
+					reiBrancoX=4;
+					reiBrancoY=7;
+					System.out.println("nao pode fazer roque pois colocaria rei branco em xeque");
+					return false;
+				}
 				System.out.println("roque branco longo");
 				return true;
 				
@@ -372,6 +412,17 @@ public class Chess implements  Observed {
 				pieces[i-2][j]=pieces[i][j];
 				pieces[i][j] = new Vago();	
 				move(i-1,j);
+				if (isInCheck(Color.white)) {
+					pieces[i][j]=pieces[i-2][j];
+					pieces[i-2][j]= new Vago();	
+					pieces[i-1][j] = new Vago();
+					pieces[selected.i][selected.j]=new Rei(Color.white);
+					isBlackTurn=false;
+					reiBrancoX=4;
+					reiBrancoY=7;
+					System.out.println("nao pode fazer roque pois colocaria rei branco em xeque");
+					return false;
+				}
 				System.out.println("roque branco curto");
 				return true;
 			}

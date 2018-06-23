@@ -6,8 +6,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Rei extends Piece {
-	private static Rei reiPreto = null;
-	private static Rei reiBranco = null;
 	public Rei(Color cor) {
 		this.cor = cor;
 		this.canJump = true;
