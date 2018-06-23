@@ -280,6 +280,7 @@ public class Chess implements  Observed {
 						     JOptionPane.INFORMATION_MESSAGE); //information_message = define o tipo do popup
 				
 				ChessInitializer();
+				return;
 			}
 		} else {
 			if (isBlackTurn) blackIsCheked=false;
